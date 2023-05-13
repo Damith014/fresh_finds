@@ -1,0 +1,41 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-Black.ttf",
+      "sha1": "1671f8db26d4f86d07569741431223eabeacfe0f"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-Bold.ttf",
+      "sha1": "a5d1dd434e7ab099beacdcae584dfbc33d7d722a"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-ExtraBold.ttf",
+      "sha1": "6c18bf569efa24f77cb0cbef140b6a39a9a33855"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-ExtraLight.ttf",
+      "sha1": "34fb58cfa209ba850f8f21eb2785cf11c8128276"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-Light.ttf",
+      "sha1": "6b9c835416ee47b5c8ae5eaa040850ff529639ec"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-Medium.ttf",
+      "sha1": "ee47faf673267baa3c0143035353f0592484c682"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-Regular.ttf",
+      "sha1": "94ee4c10ed14475e34fb5e72718e52f4e2da4543"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-SemiBold.ttf",
+      "sha1": "109e21f650606636f39c6d66ba4d264c3ad56698"
+    },
+    {
+      "path": "src/assets/fonts/NotoSansSinhala-Thin.ttf",
+      "sha1": "fee34f467be865db49e5e2a05e4e6718c6500600"
+    }
+  ]
+}
