@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         borderRadius:10,
         paddingTop:8,
         marginLeft:16, 
-        marginRight:16
+        marginRight:16,
+        marginBottom: 8
     },
     view_pending: {
       flexDirection:'column',
@@ -68,6 +69,13 @@ const styles = StyleSheet.create({
     time_title: {
       fontFamily:'NotoSansSinhala-Regular',
       fontSize: 12,
+      marginTop:4,
+      color: colors.dark_gray,
+
+    },
+    time_sub_title: {
+      fontFamily:'NotoSansSinhala-Regular',
+      fontSize: 10,
       marginTop:4,
       color: colors.dark_gray,
 
