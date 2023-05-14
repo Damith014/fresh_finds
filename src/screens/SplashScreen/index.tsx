@@ -11,7 +11,7 @@ function SplashScreen() {
   const navigation = useNavigation<splashScreenProp>();
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate("Mobile");
+      navigation.navigate("Drawer");
     }, 3000);
   }, []);
 

@@ -9,6 +9,7 @@ import strings from "../constants/strings";
 import colors from "../constants/colors";
 import ProfileScreen from "../screens/ProfileScreen";
 import ListScreen from "../screens/ListScreen";
+import PostScreen from "../screens/PostScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator<RootNavigation>();
@@ -85,7 +86,7 @@ function NotificationScreenStack() {
     >
       <Stack.Screen
         name="Notification"
-        component={ListScreen}
+        component={PostScreen}
         options={{
           title: strings.notification,
         }}
