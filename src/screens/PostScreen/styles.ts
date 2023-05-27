@@ -26,6 +26,24 @@ export const styles = StyleSheet.create({
     marginLeft: 24,
     marginRight: 24,
   },
+  dropdown: {
+    minHeight: 48,
+    borderColor:colors.light_gray,
+    borderWidth: 1,
+    backgroundColor:colors.primay,
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    color: colors.black,
+  },
+  dropdown_error: {
+    minHeight: 48,
+    borderColor:colors.pure_red,
+    borderWidth: 1,
+    backgroundColor:colors.primay,
+    borderRadius: 10,
+    paddingHorizontal: 8,
+    color: colors.black,
+  },
   section: {
     marginTop: 5,
     marginLeft: 24,
@@ -52,7 +70,7 @@ export const styles = StyleSheet.create({
   header_label_section: {
     fontSize: 14,
     color: colors.black,
-    fontFamily:'NotoSansSinhala-Medium'
+    fontFamily:'NotoSansSinhala-Bold'
   },
   header_label_text: {
     fontFamily:'NotoSansSinhala-Medium',
@@ -66,14 +84,66 @@ export const styles = StyleSheet.create({
   },
   text_title: {
     fontFamily:'NotoSansSinhala-Regular',
-    fontSize: 14,
+    fontSize: 12,
     marginTop:8,
-    color: colors.title_color,
+    color: colors.black,
+  },
+  text_hint: {
+    fontFamily:'NotoSansSinhala-Regular',
+    fontSize: 10,
+    marginTop:8,
+    color: colors.dark,
   },
   text_header: {
     fontSize: 22,
     textAlign: "left",
     color: colors.dark,
     fontFamily:'NotoSansSinhala-Medium'
+  },
+  text_view: {
+    flex:1,
+    borderColor: colors.light_gray,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 48,
+    minWidth: 48,
+    marginTop: 8,
+    padding: 4,
+    marginLeft:4,
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+    
+  },
+  text_view_error: {
+    flex:1,
+    borderColor: colors.pure_red,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 48,
+    minWidth: 48,
+    marginTop: 8,
+    padding: 4,
+    marginLeft:4,
+    justifyContent:'center',
+    alignContent:'center',
+    alignItems:'center'
+    
+  },
+  text_placeholder: {
+    width: "88%",
+    fontFamily:'NotoSansSinhala-Regular',
+    fontSize: 10,
+    color: colors.dark_gray,
+    marginLeft: 8,
+    marginTop: 4,
+    textAlign:'center'
+  },
+  text_head:{
+    marginTop: 22,
+    fontWeight: '600',
+    fontSize: 16,
+    fontFamily:'NotoSansSinhala-Medium',
+    color: colors.menu
   }
 });

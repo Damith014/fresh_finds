@@ -10,13 +10,16 @@ import { RootNavigation } from "../../navigations/RootNavigation";
 import { useNavigation } from "@react-navigation/native";
 import Tag from "../../components/Cards/Tag";
 import Service from "../../service/Service";
+import EmptyCard from "../../components/Cards/EmptyCard";
+import strings from "../../constants/strings";
 
 type homeScreenProp = StackNavigationProp<RootNavigation, "Drawer">;
 function HomeScreen() {
-  const dateGraphRef = useRef();
+  const dateTagRef = useRef<any>();
   const navigation = useNavigation<homeScreenProp>();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<any>([]);
+  const [selected, setSelected] = useState("0");
   const [category] = useState([
     { label: "සියල්ල", value: "0" },
     { label: "එළවළු වර්ග", value: "1" },
@@ -35,22 +38,31 @@ function HomeScreen() {
   useEffect(() => {
     getProgram().catch(error => {});
     async function getProgram() {
-      setIsLoading(true);
-      let payload = {
-        "category" : 0
-      }
-      let response = await Service.home(payload);
-      if (response.status == "100") {
-        setItems(response.items)
-        setIsLoading(false);
-
-      } else {
-        setIsLoading(false);
-      }
+      await getItems(0);
     }
   }, []);
+  async function getItems(tag: number){
+    setIsLoading(true);
+    let payload = {
+      "category" : tag
+    }
+    let response = await Service.home(payload);
+    if (response.status == "100") {
+      setItems(response.items)
+      setIsLoading(false);
 
-
+    } else {
+      setIsLoading(false);
+    }
+  }
+  function onPress(tag: string, index: number) {
+    dateTagRef.current.scrollToIndex({ animated: true, index, viewPosition:0.5 });
+    setSelected(tag);
+    getItems(Number(tag));
+  }
+  const EmptyListMessage = () => {
+    return <EmptyCard title={strings.empty_title} body={strings.empty} />;
+  };
   return (
     <View style={styles.container}>
       <View style={styles.row_section}>
@@ -67,24 +79,23 @@ function HomeScreen() {
         </TouchableOpacity>
         <View style={styles.search_section}>
           <TouchableOpacity
-            onPress={() => undefined}
+            onPress={() => navigation.navigate("Search")}
             style={styles.search_button}
           >
-            {/* heart-sharp */}
             <Icon name="search-outline" size={25} color={colors.menu} />
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.tag_section_admin}>
         <FlatList
-          ref={dateGraphRef}
+          ref={dateTagRef}
           horizontal
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           data={category}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => {
-            return <Tag title={item.label} isActive={index == 0? true: false} />;
+            return <Tag title={item.label} isActive={item.value == selected ? true: false} onPress={() => void onPress(item.value,index)}/>;
           }}
           nestedScrollEnabled={true}
         />
@@ -96,9 +107,10 @@ function HomeScreen() {
           data={items}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => {
-            return <ItemCard item={item} />;
+            return <ItemCard item={item}/>;
           }}
           nestedScrollEnabled={true}
+          ListEmptyComponent={EmptyListMessage}
         />
     </View>
   );

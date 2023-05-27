@@ -18,8 +18,9 @@ export default function Button({
   onPress,
 }: Props) {
   return (
-    <TouchableOpacity onPress={onPress} style={isReject? styles.red: isSellOut? styles.gray: styles.dark}>
-      <Text style={styles.label_text}>{label}</Text>
+    <TouchableOpacity onPress={onPress} 
+    style={isReject? styles.red: isSellOut? styles.gray: isActive? styles.geen: styles.dark}>
+      <Text style={isReject? styles.red: isSellOut? styles.gray: isActive? styles.geen: styles.label_text}>{label}</Text>
     </TouchableOpacity>
   );
 }

@@ -67,12 +67,19 @@ export const styles = StyleSheet.create({
     marginTop:16,
     fontSize: 14,
     color: colors.black,
-    fontFamily:'NotoSansSinhala-Medium'
+    fontFamily:'NotoSansSinhala-Bold'
   },
   header_label_text: {
-    fontFamily:'NotoSansSinhala-Medium',
-    marginTop:4,
+    fontFamily:'NotoSansSinhala-Regular',
+    marginTop:16,
     fontSize: 14,
+    color: colors.dark,
+  },
+  header_label_text_opacity: {
+    fontFamily:'NotoSansSinhala-Regular',
+    marginTop:16,
+    fontSize: 14,
+    opacity:0.4,
     color: colors.dark,
   },
   error_text: {
@@ -90,5 +97,40 @@ export const styles = StyleSheet.create({
     textAlign: "left",
     color: colors.dark,
     fontFamily:'NotoSansSinhala-Medium'
-  }
+  },
+  text_error_view: {
+    borderColor: colors.pure_red,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 48,
+    minWidth:48,
+    marginTop: 8,
+  },
+  otp_view: {
+    borderColor: colors.light_gray,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 48,
+    minWidth:48,
+    marginTop: 8,
+  },
+  text_otp: {
+    fontFamily:'NotoSansSinhala-Bold',
+    fontSize: 16,
+    color: colors.black,
+    minHeight: 48,
+    minWidth:48,
+    lineHeight: 22,
+    textAlign:'center',
+  },
+  text_error: {
+    width: "90%",
+    fontWeight: "600",
+    fontSize: 12,
+    color: colors.pure_red,
+    marginTop: 4,
+    lineHeight: 22,
+    marginLeft: 24,
+    marginRight: 24,
+  },
 });

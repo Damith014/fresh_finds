@@ -13,5 +13,11 @@ export const styles = StyleSheet.create({
         textAlign:'center',
         color: colors.dark,
         fontFamily:'NotoSansSinhala-SemiBold',
-    }
+    },
+    sideMenuProfileIcon: {
+        resizeMode: 'center',
+        width: '100%',
+        height: 150,
+        alignSelf: 'center',
+      },
 });

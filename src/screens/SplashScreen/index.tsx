@@ -5,10 +5,11 @@ import strings from "../../constants/strings";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootNavigation } from "../../navigations/RootNavigation";
 import { useNavigation } from "@react-navigation/native";
-
+const logo = require('../../assets/logo/logo.png')
 type splashScreenProp = StackNavigationProp<RootNavigation, 'Auth'>;
 function SplashScreen() {
   const navigation = useNavigation<splashScreenProp>();
+  
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate("Drawer");
@@ -17,7 +18,8 @@ function SplashScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>{strings.app_name}</Text>
+      <Image source={logo} style={styles.sideMenuProfileIcon} />
+      {/* <Text style={styles.label}>{strings.app_name}</Text> */}
     </View>
   );
 }

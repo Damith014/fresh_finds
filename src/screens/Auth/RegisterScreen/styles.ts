@@ -66,8 +66,8 @@ export const styles = StyleSheet.create({
   text_title: {
     fontFamily:'NotoSansSinhala-Regular',
     fontSize: 14,
-    marginBottom:8,
-    color: colors.dark_gray,
+    marginTop:8,
+    color: colors.black,
   },
   text_header: {
     fontSize: 22,

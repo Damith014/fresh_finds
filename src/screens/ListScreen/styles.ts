@@ -28,4 +28,37 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
 },
+button_section: {
+  position: "absolute",
+  width: "100%",
+  bottom: 0,
+  padding: 24,
+},
+text_title: {
+  fontFamily:'NotoSansSinhala-Bold',
+  fontSize: 14,
+  marginBottom:8,
+  color: colors.black,
+},
+text_sub_title: {
+  fontFamily:'NotoSansSinhala-Medium',
+  fontSize: 14,
+  marginBottom:8,
+  lineHeight:24,
+  color: colors.dark_gray,
+},
+text_sub: {
+  fontFamily:'NotoSansSinhala-Regular',
+  fontSize: 12,
+  marginBottom:8,
+  lineHeight:24,
+  color: colors.dark_gray,
+},
+text_head:{
+  marginTop: 22,
+  fontWeight: '600',
+  fontSize: 16,
+  fontFamily:'NotoSansSinhala-Medium',
+  color: colors.menu
+}
 });

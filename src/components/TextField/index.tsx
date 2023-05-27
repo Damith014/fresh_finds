@@ -15,6 +15,7 @@ type Props = {
   isText?: boolean;
   isContry?: boolean;
   isOtp?: boolean;
+  ref?: any;
   onChange: (text: string) => void;
 };
 
@@ -27,6 +28,7 @@ export default function TextField({
   isText,
   isContry,
   isOtp,
+  ref,
   onChange,
 }: Props) {
   const [show, setShow] = useState(false);
@@ -84,13 +86,16 @@ export default function TextField({
             autoCorrect={false}
             clearButtonMode="while-editing"
             onChangeText={onChange}
+            keyboardType='numeric'
+            maxLength={1}
+            ref={ ref => ref = ref}
           />
         </View>
       )}
 
       {isContry && (
         <View style={styles.input_container}>
-          <TouchableOpacity onPress={() => setShow(true)}>
+          <TouchableOpacity onPress={() => setShow(false)}>
             <Text style={styles.label_contry}>
               {country.flag} {country.dial_code}
             </Text>

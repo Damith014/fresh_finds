@@ -9,7 +9,8 @@ import strings from "../constants/strings";
 import colors from "../constants/colors";
 import ProfileScreen from "../screens/ProfileScreen";
 import ListScreen from "../screens/ListScreen";
-import PostScreen from "../screens/PostScreen";
+import NotificationScreen from "../screens/NotificationScreen";
+import FavoriteScreen from "../screens/FavoriteScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator<RootNavigation>();
@@ -70,7 +71,7 @@ function FavoriteScreenStack() {
     >
       <Stack.Screen
         name="Favorite"
-        component={ListScreen}
+        component={FavoriteScreen}
         options={{
           title: strings.favorite,
         }}
@@ -86,7 +87,7 @@ function NotificationScreenStack() {
     >
       <Stack.Screen
         name="Notification"
-        component={PostScreen}
+        component={NotificationScreen}
         options={{
           title: strings.notification,
         }}

@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LoginScreen from "../screens/Auth/LoginScreen";
 import OTPScreen from "../screens/Auth/OTPScreen";
 import RegisterScreen from "../screens/Auth/RegisterScreen";
-
 const Stack = createStackNavigator();
 function LoginStack() {
   return (
@@ -42,7 +41,7 @@ function RegisterStack() {
 const RootStack = {
   LoginStack,
   OTPStack,
-  RegisterStack,
+  RegisterStack
 };
 
 export default RootStack;

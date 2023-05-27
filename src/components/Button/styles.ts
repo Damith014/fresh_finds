@@ -10,21 +10,26 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       backgroundColor:colors.dark
     },
+    geen: {
+      marginTop:8,
+      marginBottom:8,
+      marginRight:2,
+      textAlign:'center',
+      color:colors.dark
+    },
     red: {
-      width: '100%', 
-      minHeight: 51,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 10,
-      backgroundColor:colors.pure_red
+      marginTop:8,
+      marginBottom:8,
+      marginRight:2,
+      textAlign:'center',
+      color:colors.pure_red
     },
     gray: {
-      width: '100%', 
-      minHeight: 51,
-      justifyContent: "center",
-      alignItems: "center",
-      borderRadius: 10,
-      backgroundColor:colors.dark_gray
+      marginTop:8,
+      marginBottom:8,
+      marginRight:2,
+      textAlign:'center',
+      color:colors.dark_gray
     },
     label_text: {
       fontSize: 16,

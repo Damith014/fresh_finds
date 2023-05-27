@@ -8,10 +8,24 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.primay,
   },
   back_button:{
-    margin:24
+    marginTop: 16,
+    marginLeft:16
   },
   menu_button:{
     margin:16
+  },
+  row_section:{
+    flexDirection:'row'
+  },
+  search_section:{
+    alignItems: 'flex-end',
+    flexDirection:'column',
+    flex:1,
+    marginRight:24
+  },
+  search_button: {
+    marginTop:16,
+    marginRight:16,
   },
   header_section: {
     marginLeft: 24,
@@ -77,5 +91,83 @@ export const styles = StyleSheet.create({
     textAlign: "left",
     color: colors.dark,
     fontFamily:'NotoSansSinhala-Medium'
-  }
+  },
+  text_head:{
+    marginTop: 22,
+    fontWeight: '600',
+    fontSize: 16,
+    fontFamily:'NotoSansSinhala-Medium',
+    color: colors.menu
+  },
+  text_edit:{
+    marginTop: 4,
+    fontSize: 16,
+    fontFamily:'NotoSansSinhala-Regular',
+    color: colors.dark
+  },
+  name_header: {
+    color: colors.black,
+    fontWeight: "500",
+    fontSize: 16,
+    marginTop:8,
+    fontFamily:'NotoSansSinhala-Medium',
+  },
+  title_header: {
+    color: colors.dark_gray,
+    marginTop:4,
+    fontWeight: "400",
+    fontSize: 12,
+    textAlign:'center',
+    fontFamily:'NotoSansSinhala-Medium',
+  },
+  value_header: {
+    color: colors.dark,
+    fontWeight: "400",
+    fontSize: 14,
+    fontFamily:'NotoSansSinhala-Medium',
+  },
+  image: {
+    width: 90,
+    height: 90,
+    borderColor: colors.menu,
+    borderRadius: 45,
+    borderWidth: 1,
+  },
+  profile_section: {
+    marginRight: 16,
+    marginLeft: 16,
+    alignItems:'center'
+  },
+  rank_section:{
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+    width:'100%',
+    borderRadius: 10,
+    shadowColor: "#000",
+    backgroundColor:'#FFFFFF',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 1,
+    padding: 8,
+    flexDirection:'row'
+  },
+  verticleLine: {
+    height: '100%',
+    width: 1,
+    backgroundColor: colors.menu,
+  },
+  text_title_label:{
+    fontWeight: '400',
+    fontSize: 12,
+    fontFamily:'NotoSansSinhala-Medium',
+    color: colors.title_color
+  },
+  text_value_label:{
+    marginTop: 4,
+    fontWeight: '600',
+    fontSize: 13,
+    fontFamily:'NotoSansSinhala-Medium',
+    color: colors.value
+  },
 });

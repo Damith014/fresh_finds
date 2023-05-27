@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
       borderRadius:10,
       paddingTop:8,
       marginLeft:16, 
-      marginRight:16
+      marginRight:16,
+      marginBottom: 8
   },
     view: { 
       marginBottom:8,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     colum_view_a:{
         flexDirection:'column',
         flex:1,
-        justifyContent:'flex-start'
+        justifyContent:'flex-end'
     },
     icon:{
         width:100,
@@ -95,7 +96,32 @@ const styles = StyleSheet.create({
         justifyContent:'flex-end',
         flex:1,
         marginRight:8,
-    }
+    },
+    verticle_p: {
+      height: '100%',
+      width: 3,
+      backgroundColor: colors.menu,
+    },
+    verticle_c: {
+      height: '100%',
+      width: 3,
+      backgroundColor: colors.pure_red,
+    },
+    verticle_r: {
+      height: '100%',
+      width: 3,
+      backgroundColor: colors.red,
+    },
+    verticle_a: {
+      height: '100%',
+      width: 3,
+      backgroundColor: colors.dark,
+    },
+    verticle_o: {
+      height: '100%',
+      width: 3,
+      backgroundColor: colors.black,
+    },
 });
 
 export default styles;

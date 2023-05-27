@@ -5,15 +5,14 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     alignContent: "flex-start",
-    backgroundColor: colors.backgound_color,
   },
   back_button: {
-    marginTop:24,
-    marginLeft:24,
+    marginTop:16,
+    marginLeft:16,
   },
   fav_button: {
-    marginTop:24,
-    marginRight:24,
+    marginTop:16,
+    marginRight:16,
   },
   fav_section:{
     alignItems: 'flex-end',
@@ -23,7 +22,7 @@ export const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     bottom: 0,
-    padding: 24
+    padding: 24,
   },
   main_view: {
     flex: 1,
@@ -31,6 +30,7 @@ export const styles = StyleSheet.create({
   },
   image_view: {
     flex: 1,
+    marginBottom:-20
   },
   details_view: {
     flex: 2,
@@ -44,6 +44,12 @@ export const styles = StyleSheet.create({
     },
     shadowColor: "#000000",
     elevation: 4,
+  },
+  scroller_section:{  
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignContent: 'center',
+    marginBottom:80
   },
   input_section: {
     marginTop: 15,
@@ -81,5 +87,10 @@ export const styles = StyleSheet.create({
   },
   row_section:{
     flexDirection:'row'
-  }
+  },
+  colum_view_a:{
+    flexDirection:'column',
+    flex:1,
+    justifyContent:'flex-end'
+},
 });

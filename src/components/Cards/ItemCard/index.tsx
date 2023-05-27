@@ -2,22 +2,28 @@ import * as React from "react";
 import { View, Image, Text } from "react-native";
 import styles from "./styles";
 import strings from "../../../constants/strings";
-import Button from "../../Button";
 import { Item } from "../../../constants/interfaces";
-
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootNavigation } from "../../../navigations/RootNavigation";
+import { useNavigation } from "@react-navigation/native";
 type Props = {
+  onPress?: any;
   item?: Item;
-  isManage?:boolean;
-  isSoldOut?:boolean;
+  isManage?: boolean;
   isPending?:boolean;
+  handleCallback?: any;
+  showStatus?: boolean
 };
-
+type detailsScreenProp = StackNavigationProp<RootNavigation, "Details">;
 export default function ItemCard({
   item,
   isManage,
-  isSoldOut,
-  isPending
+  isPending,
+  handleCallback,
+  showStatus
 }: Props) {
+  const navigation = useNavigation<detailsScreenProp>();
   const category = [
     { label: "සියල්ල", value: "0" },
     { label: "එළවළු වර්ග", value: "1" },
@@ -35,16 +41,16 @@ export default function ItemCard({
   ];
   let type = category[Number(item?.category ?? 0)].label;
   const regex = /පොල්/g;
-  let quantity_type = item?.title.match(regex) == null ? strings.price_per : strings.price_nutes;
+  let quantity_type = item?.title?.match(regex) == null ? strings.price_per : strings.price_nutes;
   let images = item?.images.split(",") ?? [];
   let image = images.length == 0 ? `https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png` : `http://sigirisoft.lk/fresh_backend/upload/${images[0]}`;
   function toTimestamp(strDate: any){
-    var datum = Date.parse(strDate);
+    let datum = Date.parse(strDate);
     return datum;
   }
   function timeSince(date: number) {
-    var seconds = Math.floor((new Date().getTime() - date) / 1000);
-    var interval = seconds / 31536000;
+    let seconds = Math.floor((new Date().getTime() - date) / 1000);
+    let interval = seconds / 31536000;
     if (interval > 1) {
       return Math.floor(interval) == 1 ? Math.floor(interval) + " year" : Math.floor(interval) + " years";
     }
@@ -66,86 +72,51 @@ export default function ItemCard({
     }
     return Math.floor(seconds) == 1 ? Math.floor(seconds) + " second" : Math.floor(seconds) + " seconds";
   }
+  function callBack(){
+    handleCallback();
+  }
   return (
     <View style={isPending? styles.view_pending: styles.view_main}>
-      <View style={styles.view}>
-        <View style={styles.colum_view}>
-          <Image
-            source={{
-              uri: image,
-            }}
-            style={styles.icon}
-          />
-        </View>
-        <View style={styles.colum_view_a}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ width: "50%", alignItems: "flex-start" }}>
-              <Text style={styles.text_title}>{item?.title}</Text>
-              <View style={styles.row_section}>
-                <Text style={styles.time_title}>{item?.location} </Text>
+      <TouchableOpacity
+      onPress={() => navigation.navigate("Details", {item: item, isMange: isManage ?? false, callBack: callBack})}
+      >
+        <View style={styles.view}>
+          {showStatus &&
+          // 0-pending, 1-approved, 2-rejected, 3-finish, 4-cancel
+            <View style={item?.status == "0" ?styles.verticle_p: item?.status == "1"? styles.verticle_a: 
+            item?.status == "2"?styles.verticle_r:item?.status == "3"?styles.verticle_o:item?.status == "4"?
+          styles.verticle_c: styles.verticle_p}></View>
+          }
+          <View style={styles.colum_view}>
+            <Image
+              source={{
+                uri: image,
+              }}
+              style={styles.icon}
+            />
+          </View>
+          <View style={styles.colum_view_a}>
+            <View style={{ flexDirection: "row" }}>
+              <View style={{ width: "50%", alignItems: "flex-start" }}>
+                <Text style={styles.text_title}>{item?.title}</Text>
+                <View style={styles.row_section}>
+                  <Text style={styles.time_title}>{item?.location} </Text>
+                </View>
+                <Text style={styles.time_sub_title}>{type}</Text>
               </View>
-              <Text style={styles.time_sub_title}>{type}</Text>
-              <Text style={styles.price_title}>{item?.quantity} {quantity_type}</Text>
+              <View style={{ width: "50%" }}>
+                <Text style={styles.text_title_right}>
+                  RS {parseFloat(item?.price ?? "0").toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                </Text>
+                <Text style={styles.price_title}>{item?.quantity} {quantity_type}</Text>
+              </View>
             </View>
-            <View style={{ width: "50%" }}>
-              <Text style={styles.text_title_right}>RS {parseFloat(item?.price ?? "0").toLocaleString(undefined, { minimumFractionDigits: 2 })}</Text>
-            </View>
-          </View>
-          <View style={styles.section_ago}>
-            <Text style={styles.time_title_ago}>{timeSince(toTimestamp(item?.updated_at))} ago</Text>
-          </View>
-        </View>
-      </View>
-      {isManage &&
-        <View style={styles.colum_view_a}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex:1, alignItems: "flex-start", marginRight:4 }}>
-              <Button
-                label={strings.reject}
-                isActive={false}
-                isReject={true}
-                onPress={() => {
-                  undefined;
-                }}
-              />
-            </View>
-            <View style={{flex:1,  alignItems: "flex-start", marginLeft:4 }}>
-              <Button
-                label={strings.approve}
-                isActive={false}
-                onPress={() => {
-                  undefined;
-                }}
-              />
+            <View style={styles.section_ago}>
+              <Text style={styles.time_title_ago}>{timeSince(toTimestamp(item?.updated_at))} ago</Text>
             </View>
           </View>
         </View>
-      }
-      {isSoldOut &&
-        <View style={styles.colum_view_a}>
-          <View style={{ flexDirection: "row" }}>
-            <View style={{ flex:1, alignItems: "flex-start", marginRight:4 }}>
-              {/* <Button
-                label={strings.reject}
-                isActive={false}
-                isReject={true}
-                onPress={() => {
-                  undefined;
-                }}
-              /> */}
-            </View>
-            <View style={{flex:1,  alignItems: "flex-start", marginLeft:4 }}>
-              <Button
-                label={strings.sold_out}
-                isActive={false}
-                onPress={() => {
-                  undefined;
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      }
+      </TouchableOpacity>
     </View>
   );
 }

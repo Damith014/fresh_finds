@@ -10,6 +10,8 @@ export default {
     backgound_color:'#ecf5d0',
     background_gray:'#f7f7f7',
     menu:'#9dacb3',
-    inactive:'#e3fdf6'
+    inactive:'#e3fdf6',
+    value:'#737373',
+    red:'#FF0000'
     // 
 }
