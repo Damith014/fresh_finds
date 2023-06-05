@@ -108,6 +108,7 @@ function DrawerNavigation() {
         name="Home"
         component={HomeScreenStack}
         options={{
+          unmountOnBlur:true,
           drawerLabel: strings.home,
           drawerLabelStyle: {
             fontFamily: "NotoSansSinhala-Regular",
@@ -122,6 +123,7 @@ function DrawerNavigation() {
         name="Profile"
         component={ProfileScreenStack}
         options={{
+          unmountOnBlur:true,
           drawerLabel: strings.profile,
           drawerLabelStyle: {
             fontFamily: "NotoSansSinhala-Regular",
@@ -136,6 +138,7 @@ function DrawerNavigation() {
         name="Ads"
         component={AdsScreenStack}
         options={{
+          unmountOnBlur:true,
           drawerLabel: strings.my_ads,
           drawerLabelStyle: {
             fontFamily: "NotoSansSinhala-Regular",
@@ -150,6 +153,7 @@ function DrawerNavigation() {
         name="Favorite"
         component={FavoriteScreenStack}
         options={{
+          unmountOnBlur:true,
           drawerLabel: strings.favorite,
           drawerLabelStyle: {
             fontFamily: "NotoSansSinhala-Regular",
@@ -164,6 +168,7 @@ function DrawerNavigation() {
         name="Notification"
         component={NotificationScreenStack}
         options={{
+          unmountOnBlur:true,
           drawerLabel: strings.notification,
           drawerLabelStyle: {
             fontFamily: "NotoSansSinhala-Regular",

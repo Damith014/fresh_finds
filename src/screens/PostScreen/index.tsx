@@ -7,6 +7,7 @@ import {
   PermissionsAndroid,
   Platform,
   Image,
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
@@ -48,6 +49,8 @@ function PostScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [select, setSelectImage] = useState(0);
   const [cat, setCategory] = useState("");
+  const [label, setLable] = useState("");
+  const [alert, setAlert] = useState(false);
   const [data, setData] = useState({
     user_id: "",
     category: "",
@@ -70,6 +73,7 @@ function PostScreen() {
     message: strings.required,
   })
   useEffect(() => {
+    setIsLoading(false);
     getUser().catch(error => {});
     async function getUser() {
       let user = await AsyncStorage.getItem("account");
@@ -121,13 +125,33 @@ function PostScreen() {
       setIsLoading(true);
       let response = await Service.create(payload);
       if(response.status == "100") {
-        navigation.replace('Drawer');
+        Alert.alert(
+          "Alert",
+          strings.under_review_body,
+          [
+            {
+              text: strings.next_button,
+              onPress: () => {
+                navigation.navigate("Drawer");
+              },
+            }
+          ]
+        );
       } else {
-
+        Alert.alert(
+          "Error",
+          strings.under_review_error,
+          [
+            {
+              text: strings.under_review_error_button,
+              onPress: () => {
+              },
+            }
+          ]
+        );
       }
-      setIsLoading(false);
-      
     }
+    setIsLoading(false);
   }
   async function openImage(index: number) {
     if (index == 0) {
@@ -271,6 +295,7 @@ function PostScreen() {
             value={data.category}
             onChange={(item) => {
               setCategory(item.value);
+              setLable(item.label);
               setData({
                 ...data,
                 category: item.value,
@@ -476,7 +501,9 @@ function PostScreen() {
         <View style={styles.input_section}>
           <Text style={styles.text_title}>
             {strings.title}
-            {strings.sub_title}
+            {strings.sub_title_1}
+            {label.replace(' වර්ග', '')}
+            {strings.sub_title_2}
           </Text>
           <TextField
             placeholder={strings.title}

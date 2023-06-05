@@ -55,6 +55,9 @@ function HomeScreen() {
       setIsLoading(false);
     }
   }
+  function callBack() {
+    
+  }
   function onPress(tag: string, index: number) {
     dateTagRef.current.scrollToIndex({ animated: true, index, viewPosition:0.5 });
     setSelected(tag);
@@ -107,7 +110,7 @@ function HomeScreen() {
           data={items}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => {
-            return <ItemCard item={item}/>;
+            return <ItemCard item={item} handleCallback={callBack}/>;
           }}
           nestedScrollEnabled={true}
           ListEmptyComponent={EmptyListMessage}

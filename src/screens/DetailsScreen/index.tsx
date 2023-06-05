@@ -55,18 +55,20 @@ function DetailsScreen() {
         }
       }
       let user = await AsyncStorage.getItem("account");
-      let account = JSON.parse(user ?? '') as Account;
-      setAccount(account.id);
-      let data = {
-        "user" : account.id
-      }
-      let fovorite_response = await Service.getfavorite(data);
-      if (fovorite_response.status == "100") {
-        fovorite_response?.respond?.forEach(function (value) {
-          if (value.item == item?.id) {
-            setFavorite(true);
-          }
-        });
+      if (user != null) {
+        let account = JSON.parse(user ?? '') as Account;
+        setAccount(account.id);
+        let data = {
+          "user" : account.id
+        }
+        let fovorite_response = await Service.getfavorite(data);
+        if (fovorite_response.status == "100") {
+          fovorite_response?.respond?.forEach(function (value) {
+            if (value.item == item?.id) {
+              setFavorite(true);
+            }
+          });
+        }
       }
       setIsLoading(false);
     }
@@ -93,6 +95,10 @@ function DetailsScreen() {
     }
     await Service.favorite(payload);
     setFavorite(favorite);
+  }
+  function goBack() {
+    route.params.callBack();
+    navigation.goBack();
   }
   async function clickChangeStatus(status: number){
     setIsLoading(true);
@@ -141,19 +147,18 @@ function DetailsScreen() {
             {images.map((image: { img: any; }) => (
               <View style={{ alignItems: "center" }}>
                 <ImageBackground
-                  resizeMode="stretch"
                   style={{ width: "100%", height: "100%" }}
                   source={{ uri: image.img }}
                 >
                   <View style={styles.row_section}>
                     <TouchableOpacity
-                      onPress={() => navigation.goBack()}
+                      onPress={() => goBack()}
                       style={styles.back_button}
                     >
                       <Icon
                         name="arrow-back-outline"
                         size={30}
-                        color={colors.primay}
+                        color={colors.black}
                       />
                     </TouchableOpacity>
                     <View style={styles.fav_section}>
@@ -165,7 +170,7 @@ function DetailsScreen() {
                             <Icon
                               name= { favorite? "heart-sharp" : "heart-outline"}
                               size={30}
-                              color={colors.primay}
+                              color={colors.black}
                             />
                         }
                       </TouchableOpacity>
@@ -198,6 +203,9 @@ function DetailsScreen() {
                       minimumFractionDigits: 2,
                     })}
                   </Text>
+                </View>
+                <View style={styles.row_section}>
+                  <Text style={styles.text_title_q}>{item?.quantity}</Text>
                   <Text style={styles.price_title}> {quantity_type}</Text>
                 </View>
                 <View style={styles.row_section}>
@@ -211,6 +219,17 @@ function DetailsScreen() {
                   <Text style={styles.time_title}>{strings.location}:</Text>
                   <Text style={styles.time_title}> {item?.location}</Text>
                 </View>
+
+                { isLogin == "2" &&
+                  <View style={{marginTop: 8}}>
+                    <Text style={styles.text_contact}>{strings.contact_person}:</Text>
+                    <Text style={styles.text_contact_}>{user.name}</Text>
+                    <TouchableOpacity onPress={()=>{void makeACall()}}>
+                      <Text style={styles.text_contact_}>{user.mobile}</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.text_contact_}>{user.email}</Text>
+                  </View>
+                }
               </View>
             </ScrollView>
           </View>

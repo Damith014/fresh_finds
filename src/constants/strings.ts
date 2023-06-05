@@ -21,7 +21,8 @@ export default {
     location: 'ස්ථානය',
     photos:'ඡායාරූප ඇතුලත් කරන්න (3)',
     title:'දැන්වීමේ මාතෘකාව',
-    sub_title:' - විකිණීමට ඇති පළතුරු වර්ගයෙහි නම පමණක් සඳහන් කරන්න',
+    sub_title_1:' - විකිණීමට ඇති ',
+    sub_title_2:' වර්ගයෙහි නම පමණක් සඳහන් කරන්න',
     unit_price:'1 Kg - මිල',
     quntity:'ප්‍රමාණය',
     details:'විස්තර',
@@ -65,5 +66,15 @@ export default {
     approve_ads: 'අනුමත දැන්වීම්',
     rejected_ads: 'ප්‍රතික්ෂේප දැන්වීම්',
     cancel_ads:'අවලංගු දැන්වීම්',
+    sold_out_ads:'විකිණී හමාර දැන්වීම්',
+
+    under_review_title: 'ඔබේ දැන්වීම සමාලෝචනය වෙමින් පවතී!',
+    under_review_body: 'ඔබේ දැන්වීම සමාලෝචනය වෙමින් පවතී!',
+    under_review_error: 'කරුණාකර නැවත උත්සාහ කරන්න!',
+    under_review_error_button:'නැවත උත්සාහ කරන්න',
+
+    contact_person: 'ඇමතිය යුතු පුද්ගලයා',
+
+    all:'සියල්ල'
 
 }

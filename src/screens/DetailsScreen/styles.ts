@@ -9,10 +9,14 @@ export const styles = StyleSheet.create({
   back_button: {
     marginTop:16,
     marginLeft:16,
+    backgroundColor:colors.light,
+    borderRadius:8
   },
   fav_button: {
     marginTop:16,
     marginRight:16,
+    backgroundColor:colors.light,
+    borderRadius:8
   },
   fav_section:{
     alignItems: 'flex-end',
@@ -67,11 +71,29 @@ export const styles = StyleSheet.create({
     marginTop:12,
     color: colors.title_color,
   },
+  text_title_q: {
+    fontFamily:'NotoSansSinhala-Bold',
+    fontSize: 14,
+    marginTop:15,
+    color: colors.title_color,
+  },
   text_body: {
     fontFamily:'NotoSansSinhala-Medium',
     fontSize: 14,
     marginTop:8,
     color: colors.title_color,
+  },
+  text_contact: {
+    fontFamily:'NotoSansSinhala-Medium',
+    fontSize: 12,
+    marginTop:8,
+    color: colors.title_color,
+  },
+  text_contact_: {
+    fontFamily:'NotoSansSinhala-Medium',
+    fontSize: 12,
+    marginTop:8,
+    color: colors.dark_gray,
   },
   price_title: {
     fontFamily:'NotoSansSinhala-Regular',

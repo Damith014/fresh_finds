@@ -12,6 +12,7 @@ export default {
     menu:'#9dacb3',
     inactive:'#e3fdf6',
     value:'#737373',
-    red:'#FF0000'
+    red:'#FF0000',
+    light:'#f9f9f9'
     // 
 }

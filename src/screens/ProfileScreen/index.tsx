@@ -19,7 +19,7 @@ function ProfileScreen(){
     const navigation = useNavigation<profileScreenProp>();
     const [isLogin, setLogin] = useState("0");
     const [account, setAccount] = useState<Account>();
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
     const [stat, setStat] = useState({post: 0, approve: 0, cancel: 0, reject: 0, finish: 0});
     useEffect(() => {
       setUserStatus().catch(error => {});
@@ -28,32 +28,35 @@ function ProfileScreen(){
         setLogin(type)
         if (type != "0") {
           let user = await AsyncStorage.getItem("account");
-          let account = JSON.parse(user ?? '') as Account;
-          setAccount(account);
-          let payload = {
-            "user": account?.id
-          }
-          //0-pending, 1-approved, 2-rejected, 3-finish, 4-cancel
-          let profile_stat = await Service.profile(payload);
-          if (profile_stat.status == "100") {
-            let post = 0;
-            let approve = 0;
-            let cancel = 0;
-            let reject = 0;
-            let finish = 0;
-            profile_stat?.respond?.forEach(function (value) {
-              post += Number(value.total);
-              if (value.status == "1") {
-                approve = Number(value.total);
-              } else if (value.status == "4") {
-                cancel = Number(value.total);
-              } else if (value.status == "2") {
-                reject = Number(value.total);
-              } else if ( value.status == "3") {
-                finish = Number(value.total);
-              }
-            });
-            setStat ({post: post, approve: approve, cancel: cancel, reject: reject, finish: finish});
+          if (user != null) {
+            setIsLoading(true)
+            let account = JSON.parse(user ?? '') as Account;
+            setAccount(account);
+            let payload = {
+              "user": account?.id
+            }
+            //0-pending, 1-approved, 2-rejected, 3-finish, 4-cancel
+            let profile_stat = await Service.profile(payload);
+            if (profile_stat.status == "100") {
+              let post = 0;
+              let approve = 0;
+              let cancel = 0;
+              let reject = 0;
+              let finish = 0;
+              profile_stat?.respond?.forEach(function (value) {
+                post += Number(value.total);
+                if (value.status == "1") {
+                  approve = Number(value.total);
+                } else if (value.status == "4") {
+                  cancel = Number(value.total);
+                } else if (value.status == "2") {
+                  reject = Number(value.total);
+                } else if ( value.status == "3") {
+                  finish = Number(value.total);
+                }
+              });
+              setStat ({post: post, approve: approve, cancel: cancel, reject: reject, finish: finish});
+            }
           }
           setIsLoading(false)
         }

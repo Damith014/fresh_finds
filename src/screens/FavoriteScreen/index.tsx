@@ -7,7 +7,7 @@ import { styles } from "./styles";
 import strings from "../../constants/strings";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootNavigation } from "../../navigations/RootNavigation";
-import { useNavigation } from "@react-navigation/native";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
 import Button from "../../components/Button";
 import EmptyCard from "../../components/Cards/EmptyCard";
 import Service from "../../service/Service";
@@ -23,8 +23,6 @@ function FavoriteScreen(){
     const [items, setItems] = useState<any>([]);
     const [isLogin, setLogin] = useState("0");
     useEffect(() => {
-      console.log("========");
-      
       getProgram().catch(error => {});
       async function getProgram() {
         let type = await handleUserStatus()
@@ -61,11 +59,8 @@ function FavoriteScreen(){
     if (isLogin != "0") {
       let user = await AsyncStorage.getItem("account");
       let account = JSON.parse(user ?? '') as Account;
-      if (account.type == "2") {
-        await getItems(0);
-      } else {
-        await getItems(Number(account?.id));
-      }
+      setIsLoading(false);
+      await getItems(Number(account?.id));
     } else {
       setIsLoading(false);
     }
@@ -74,7 +69,7 @@ function FavoriteScreen(){
       <View style={styles.container}>
         <View style={styles.row_section}>
           <TouchableOpacity
-            onPress={() => navigation.openDrawer()}
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             style={styles.menu_button}
           >
             <Icon name="menu-outline" size={30} color={colors.menu} />

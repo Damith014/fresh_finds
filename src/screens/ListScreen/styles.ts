@@ -60,5 +60,19 @@ text_head:{
   fontSize: 16,
   fontFamily:'NotoSansSinhala-Medium',
   color: colors.menu
-}
+},
+dropdown: {
+  minHeight: 48,
+  marginLeft:16,
+  marginRight:16,
+  marginBottom:8,
+  borderColor:colors.light_gray,
+  borderWidth: 1,
+  backgroundColor:colors.primay,
+  borderRadius: 10,
+  paddingHorizontal: 8,
+  color: colors.black,
+  fontFamily:'NotoSansSinhala-Medium',
+  fontSize: 12
+},
 });

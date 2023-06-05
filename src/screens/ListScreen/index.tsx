@@ -16,12 +16,23 @@ import { handleUserStatus } from "../../constants/auth";
 import LoginCard from "../../components/Cards/LoginCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Account } from "../../constants/interfaces";
+import { Dropdown } from "react-native-element-dropdown";
 type listScreenProp = StackNavigationProp<RootNavigation, "Drawer">;
 function ListScreen(){
     const navigation = useNavigation<listScreenProp>();
     const [isLoading, setIsLoading] = useState(true);
+    {/* 0-pending, 1-approved, 2-rejected, 3-finish, 4-cancel */}
+    const [category] = useState([
+      { label: strings.all, value: "5" },
+      { label: strings.posted_ads, value: "0" },
+      { label: strings.approve_ads, value: "1" },
+      { label: strings.rejected_ads, value: "2" },
+      { label: strings.sold_out_ads, value: "3" },
+      { label: strings.cancel_ads, value: "4" },
+    ]);
     const [items, setItems] = useState<any>([]);
     const [isLogin, setLogin] = useState("0");
+    const [selected, setSelected] = useState("5");
     useEffect(() => {
       getProgram().catch(error => {});
       async function getProgram() {
@@ -56,6 +67,26 @@ function ListScreen(){
   const EmptyListMessage = () => {
     return <EmptyCard title={strings.empty_title} body={strings.empty} />;
   };
+  const Item = ({ item }: { item: any }) => (
+    selected == "5" ?
+    <ItemCard 
+      item={item} 
+      isManage={true} 
+      isPending={item.status == "0"? true : false} 
+      handleCallback={callBack}
+      showStatus={true}
+    />
+    : selected == item?.status ?
+    <ItemCard 
+      item={item} 
+      isManage={true} 
+      isPending={item.status == "0"? true : false} 
+      handleCallback={callBack}
+      showStatus={true}
+    />
+    :
+    <></>
+  );
   function clickLogin() {
     navigation.navigate('Mobile');
   }
@@ -75,7 +106,6 @@ function ListScreen(){
       setIsLoading(false);
     }
   }
-
     return(
     <View style={styles.container}>
         <View style={styles.row_section}>
@@ -92,22 +122,53 @@ function ListScreen(){
             textStyle={{ color: "#000" }}
           />
         </View>
+        <Dropdown
+            style={styles.dropdown}
+            placeholderStyle={{
+              color: colors.dark_gray,
+              fontWeight: "300",
+              fontSize: 12,
+              fontFamily: 'NotoSansSinhala-Medium'
+            }}
+            selectedTextStyle={{
+              color: colors.black,
+              fontWeight: "600",
+              fontSize: 12,
+              fontFamily: 'NotoSansSinhala-Medium'
+            }}
+            inputSearchStyle={{
+              height: 40,
+              fontSize: 12,
+              fontFamily: 'NotoSansSinhala-Medium'
+            }}
+            iconStyle={{
+              width: 20,
+              height: 20,
+            }}
+            itemTextStyle={{
+              fontSize: 12,
+              fontFamily: 'NotoSansSinhala-Medium'
+            }}
+            data={category}
+            fontFamily= 'NotoSansSinhala-Medium'
+            maxHeight={200}
+            labelField="label"
+            valueField="value"
+            placeholder={strings.category}
+            searchPlaceholder="Search..."
+            value={selected}
+            onChange={(item) => {
+              setSelected(item.value)
+            }}
+          />
           {isLogin != "0" &&
             <FlatList
-              // style={{marginBottom: 80}}
+              style={isLogin != "2"? {marginBottom: 80} : {marginBottom: 0}}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               data={items}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item, index }) => {
-                return <ItemCard 
-                  item={item} 
-                  isManage={true} 
-                  isPending={item.status == "5"? true : false} 
-                  handleCallback={callBack}
-                  showStatus={true}
-                />;
-              }}
+              renderItem={({ item }) => <Item item={item} />}
               nestedScrollEnabled={true}
               ListEmptyComponent={EmptyListMessage}
             />
