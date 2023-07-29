@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Create, Favorites, Home, Stats, Users, Validate } from "../constants/interfaces";
+import { Create, Favorites, Home, Notifications, Stats, Users, Validate } from "../constants/interfaces";
 const baseURL = () => {
   const apiUrl = "http://sigirisoft.lk/fresh_backend/index.php/API/";
   return apiUrl;
@@ -43,6 +43,13 @@ const handleStatsResponse = (response: any) => {
   return {
     respond: (response.data as Stats).respond,
     status: (response.data as Stats).status,
+    error: response && response.data ? response.data.error : "",
+  };
+};
+const handleNotificationResponse = (response: any) => {
+  return {
+    respond: (response.data as Notifications).respond,
+    status: (response.data as Notifications).status,
     error: response && response.data ? response.data.error : "",
   };
 };
@@ -131,6 +138,13 @@ const Service = {
       .then(handleFavoriteResponse)
       .catch(handleError);
   },
+  edit:async (data: any) => {
+    let url = `${baseURL()}edit`;
+    return axios
+      .post(url,data)
+      .then(handleFavoriteResponse)
+      .catch(handleError);
+  },
   getfavorite:async (data: any) => {
     let url = `${baseURL()}getfavorite`;
     return axios
@@ -140,6 +154,13 @@ const Service = {
   },
   register:async (data: any) => {
     let url = `${baseURL()}register`;
+    return axios
+      .post(url,data)
+      .then(handleFavoriteResponse)
+      .catch(handleError);
+  },
+  update:async (data: any) => {
+    let url = `${baseURL()}update`;
     return axios
       .post(url,data)
       .then(handleFavoriteResponse)
@@ -156,7 +177,7 @@ const Service = {
     let url = `${baseURL()}notification`;
     return axios
       .post(url,data)
-      .then(handleStatsResponse)
+      .then(handleNotificationResponse)
       .catch(handleError);
   },
   getuserfav:async (data: any) => {

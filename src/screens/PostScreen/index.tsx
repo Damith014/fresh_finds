@@ -8,6 +8,7 @@ import {
   Platform,
   Image,
   Alert,
+  TextInput,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
@@ -31,16 +32,16 @@ function PostScreen() {
   const [category] = useState([
     { label: "එළවළු වර්ග", value: "1" },
     { label: "පළතුරු වර්ග", value: "2" },
-    { label: "පලා වර්ග", value: "3" },
-    { label: "අල වර්ග", value: "4" },
-    { label: "ධාන්‍ය වර්ග", value: "5" },
-    { label: "කුළු බඩු වර්ග", value: "6" },
-    { label: "කරවල වර්ග", value: "7" },
-    { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "8" },
-    { label: "කෙටි ආහාර", value: "9" },
-    { label: "බයිට් වර්ග හා රස කැවිලි", value: "10" },
-    { label: "පොල්, DC පොල්, කොප්පරා, පොල්තෙල්", value: "11" },
-    { label: "පුවක්, කරැංකා, දුම්කොල, බුලත්", value: "12" },
+    { label: "ධාන්‍ය වර්ග", value: "3" },
+    { label: "කුළු බඩු වර්ග", value: "4" },
+    { label: "කරවල වර්ග", value: "5" },
+    { label: "පොල්, DC පොල්, කොප්පරා, පොල්තෙල්", value: "6" },
+    { label: "පුවක්, කරැංකා, දුම්කොල, බුලත්", value: "7" },
+    { label: "විජලනය / අගය එකතු කළ ආහාර", value: "8" },
+    { label: "බයිට් වර්ග හා රස කැවිලි", value: "9" },
+    { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
+    { label: "අල වර්ග", value: "11" },
+    { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
   ]);
   let actionSheet = useRef<any>();
   let optionArray = ["Camera", "Photo & Video Libary", "Cancel"];
@@ -191,6 +192,9 @@ function PostScreen() {
   }
   async function fileUpload(file: any) {
     setIsLoading(true);
+    setTimeout(function callback(){
+      setIsLoading(false);
+    },1000);
     const payload = new FormData();
     payload.append('file', {
       uri: file,
@@ -198,7 +202,7 @@ function PostScreen() {
       type: 'image/jpeg',
     });
     let file_response = await Service.upload(payload);
-    if (file_response.status == "success") {
+    if (file_response?.status == "success") {
       setImages([...images, file_response.users]);
     }
     setIsLoading(false);
@@ -553,19 +557,22 @@ function PostScreen() {
         </View>
         <View style={styles.input_section}>
           <Text style={styles.text_title}>{strings.details}</Text>
-          <TextField
-            placeholder={strings.details}
-            isEmpty={data.description == "" ? true : false}
-            isError={data.description == "" ? true : false}
-            isOtp={false}
-            error={error.message}
-            isText={true}
-            value={data.description}
-            onChange={(value) => setData({
-              ...data,
-              description: value,
-            })}
-          />
+          <View style={data.description == "" ? styles.text_error_view : styles.text_view_}>
+            <TextInput
+              placeholder={strings.details}
+              autoCapitalize="none"
+              returnKeyType={"done"}
+              autoCorrect={false}
+              multiline
+              value={data.description}
+              style={data.description == "" ? styles.text_placeholder_ : styles.text}
+              onChangeText={(value) => setData({
+                ...data,
+                description: value,
+              })}
+            />
+          </View>
+          {data.description == "" && <Text style={styles.text_error}>{error.message}</Text>}
         </View>
         <View style={styles.button_section}>
           <Button

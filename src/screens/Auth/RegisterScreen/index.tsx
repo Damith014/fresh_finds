@@ -19,6 +19,7 @@ import Spinner from "react-native-loading-spinner-overlay/lib";
 import { useNavigation } from "@react-navigation/native";
 import Service from "../../../service/Service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import messaging from '@react-native-firebase/messaging';
 type registerScreenProp = StackNavigationProp<RootNavigation, 'Auth'>;
 function RegisterScreen() {
   const navigation = useNavigation<registerScreenProp>();
@@ -38,10 +39,12 @@ function RegisterScreen() {
       is_error = true;
     }
     if (!is_error) {
+      let token = await messaging().getToken();
       let payload = {
         "name" : data.name,
         "email": data.email,
-        "mobile": `${mobile.replace(/\s/g, '')}`
+        "mobile": `${mobile.replace(/\s/g, '')}`,
+        "token": token
       }
       setIsLoading(true);
       let response = await Service.register(payload);

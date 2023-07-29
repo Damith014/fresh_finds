@@ -11,6 +11,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import ListScreen from "../screens/ListScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
+import PolicyScreen from "../screens/PolicyScreen";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator<RootNavigation>();
@@ -95,6 +96,22 @@ function NotificationScreenStack() {
     </Stack.Navigator>
   );
 }
+function PolicyScreenStack() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Notification"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen
+        name="Notification"
+        component={PolicyScreen}
+        options={{
+          title: strings.policy,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 function DrawerNavigation() {
   return (
     <Drawer.Navigator
@@ -161,6 +178,21 @@ function DrawerNavigation() {
           },
           drawerIcon: ({ focused, size }) => (
             <Icon name="ios-bookmark" size={20} color={colors.dark} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Policy"
+        component={PolicyScreenStack}
+        options={{
+          unmountOnBlur:true,
+          drawerLabel: strings.policy,
+          drawerLabelStyle: {
+            fontFamily: "NotoSansSinhala-Regular",
+            color: colors.dark,
+          },
+          drawerIcon: ({ focused, size }) => (
+            <Icon name="ios-notifications" size={20} color={colors.dark} />
           ),
         }}
       />

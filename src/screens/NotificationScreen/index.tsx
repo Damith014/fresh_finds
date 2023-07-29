@@ -16,6 +16,7 @@ import { handleUserStatus } from "../../constants/auth";
 import LoginCard from "../../components/Cards/LoginCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Account } from "../../constants/interfaces";
+import NotificationCard from "../../components/Cards/NotificationCard";
 type listScreenProp = StackNavigationProp<RootNavigation, "Drawer">;
 function NotificationScreen(){
     const navigation = useNavigation<listScreenProp>();
@@ -31,7 +32,7 @@ function NotificationScreen(){
           let user = await AsyncStorage.getItem("account");
           let account = JSON.parse(user ?? '') as Account;
           if (account.type == "2") {
-            await getNotification(0);
+            // await getNotification(0);
           } else {
             await getNotification(Number(account?.id));
           }
@@ -83,13 +84,12 @@ function NotificationScreen(){
         </View>
           {isLogin != "0" &&
             <FlatList
-              style={{marginBottom: 80}}
               showsVerticalScrollIndicator={false}
               showsHorizontalScrollIndicator={false}
               data={items}
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item, index }) => {
-                return <ItemCard item={item} isManage={true} isPending={item.status == "5"? true : false} handleCallback={callBack}/>;
+                return <NotificationCard notification={item}/>;
               }}
               nestedScrollEnabled={true}
               ListEmptyComponent={EmptyListMessage}

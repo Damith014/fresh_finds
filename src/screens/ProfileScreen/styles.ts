@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
   },
   back_button:{
     marginTop: 16,
-    marginLeft:16
+    marginLeft:6
   },
   menu_button:{
     margin:16
@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
     color: colors.black,
     fontWeight: "500",
     fontSize: 16,
-    marginTop:8,
+    marginTop:18,
     fontFamily:'NotoSansSinhala-Medium',
   },
   title_header: {
@@ -127,10 +127,10 @@ export const styles = StyleSheet.create({
     fontFamily:'NotoSansSinhala-Medium',
   },
   image: {
-    width: 90,
-    height: 90,
+    width: 100,
+    height: 100,
     borderColor: colors.menu,
-    borderRadius: 45,
+    borderRadius: 50,
     borderWidth: 1,
   },
   profile_section: {

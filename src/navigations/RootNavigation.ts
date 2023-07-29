@@ -14,4 +14,5 @@ export type RootNavigation = {
     Notification: undefined;
     Post: undefined;
     Search: undefined;
+    EditPost: {item?: Item};
 };

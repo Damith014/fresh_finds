@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "349454438146",
+    "project_id": "green-food-ae893",
+    "storage_bucket": "green-food-ae893.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:349454438146:android:1bd9af478d7d4fdc8dbc1b",
+        "android_client_info": {
+          "package_name": "com.greenfoodsolutions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "349454438146-p2vm75voffcuff2qh13ia5c55fk1lfas.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYL3QwjxeGiErBQs0-pz7RhyeAlpFyHiQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "349454438146-p2vm75voffcuff2qh13ia5c55fk1lfas.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

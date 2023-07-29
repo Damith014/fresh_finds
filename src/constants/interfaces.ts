@@ -45,6 +45,8 @@ export interface Account {
     name: string;
     mobile: string;
     type: string;
+    email: string;
+    image: string;
     created_at: string;
 }
 export interface Favorites {
@@ -67,5 +69,17 @@ export interface Stats {
   export interface Stat {
     status: string
     total: string
+  }
+  export interface Notifications {
+    status: string
+    respond: Notification[]
+  }
+  
+  export interface Notification {
+    id: string
+    title: string
+    body: string
+    user: string
+    created_at: string
   }
   

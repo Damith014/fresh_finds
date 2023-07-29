@@ -15,8 +15,10 @@ export default {
     email:'ඔබගේ විද්යුත් තැපෑල',
     email_:'විද්යුත් තැපෑල',
     done_button:'නිර්මාණය කරන්න',
+    save: "සුරකින්න",
 
     post_header: 'දැන්වීමක් පළ කිරීමට පහත දත්ත පුරවන්න',
+    edit_header: ' ඔබේ දැන්වීම් සංස්කරණය කිරීමට පහත දත්ත පුරවන්න',
     category:'වර්ගය තෝරන්න',
     location: 'ස්ථානය',
     photos:'ඡායාරූප ඇතුලත් කරන්න (3)',
@@ -27,6 +29,7 @@ export default {
     quntity:'ප්‍රමාණය',
     details:'විස්තර',
     post_button:'දැන්වීම පළ කරන්න',
+    edit_button:'යාවත්කාලීන කරන්න',
     post_ad:'ඔබේ දැන්විම පළ කරන්න',
     required: 'මෙම ක්ෂෙත්‍රය ඔබ විසින් පිරවිය යුතු වේ.',
     image: 'අවම තරමේ ඔබ එක් ඡායාරූපයක්වත් ඇතුලත් කළ යුතු වේ.',
@@ -48,6 +51,7 @@ export default {
     profile:'මගේ පැතිකඩ',
     favorite:'ප්‍රියතම',
     notification: 'දැනුම්දීම්',
+    policy: 'රහස්‍යතා ප්‍රතිපත්තිය',
 
     logout_button:'පිටවීම',
 
@@ -74,6 +78,7 @@ export default {
     under_review_error_button:'නැවත උත්සාහ කරන්න',
 
     contact_person: 'ඇමතිය යුතු පුද්ගලයා',
+    posted_person: 'පළ කළ පුද්ගලයා',
 
     all:'සියල්ල'
 

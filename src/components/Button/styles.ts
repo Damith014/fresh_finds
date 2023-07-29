@@ -4,7 +4,7 @@ import colors from "../../constants/colors";
 const styles = StyleSheet.create({
     dark: {
       width: '100%', 
-      minHeight: 51,
+      minHeight: 45,
       justifyContent: "center",
       alignItems: "center",
       borderRadius: 10,

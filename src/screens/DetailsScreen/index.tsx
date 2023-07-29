@@ -32,6 +32,7 @@ function DetailsScreen() {
   const [favorite, setFavorite] = useState<any>(false);
   const [isLogin, setLogin] = useState("0");
   const [account, setAccount] = useState("");
+  const [edit, setEdit] = useState(false);
   const regex = /පොල්/g;
   const item = route.params.item;
   const isManage = route.params.isMange;
@@ -116,6 +117,9 @@ function DetailsScreen() {
       setIsLoading(false);
     }
   }
+  function clickEdit() {
+    setEdit(true);
+  }
   let quantity_type =
     item?.title.match(regex) == null ? strings.price_per : strings.price_nutes;
   return (
@@ -128,7 +132,21 @@ function DetailsScreen() {
             textStyle={{ color: "#000" }}
           />
           <Swiper
-            showsButtons={false}
+            showsButtons={images?.length < 2 ? false:true}
+            dot={
+                <View
+                style={{
+                  backgroundColor: colors.black,
+                  width: 8,
+                  height: 8,
+                  borderRadius: 4,
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginTop: 3,
+                  marginBottom: 3
+                }}
+              />
+            }
             activeDot={
               <View
                 style={{
@@ -143,6 +161,9 @@ function DetailsScreen() {
                 }}
               />
             }
+            prevButton={<Text style={{
+             color:colors.primay, fontSize:50}}>‹</Text>}
+            nextButton={<Text style={{color:colors.primay, fontSize:50}}>›</Text>}
           >
             {images.map((image: { img: any; }) => (
               <View style={{ alignItems: "center" }}>
@@ -162,18 +183,28 @@ function DetailsScreen() {
                       />
                     </TouchableOpacity>
                     <View style={styles.fav_section}>
+                    {isManage ?(
+                        <TouchableOpacity
+                          onPress={() => {navigation.navigate("EditPost",{item:item})}}
+                          
+                          style={styles.fav_button}
+                        >
+                    {/* trash-outline */}
+                    <Icon name="build-outline" size={24} color={colors.black} />
+                  </TouchableOpacity>):(
                       <TouchableOpacity
                         onPress={() => void clickFavorite(!favorite)}
                         style={styles.fav_button}
                       >
-                        {!isManage &&
+                        
                             <Icon
                               name= { favorite? "heart-sharp" : "heart-outline"}
                               size={30}
                               color={colors.black}
                             />
-                        }
-                      </TouchableOpacity>
+                        
+                        
+                      </TouchableOpacity>)}
                     </View>
                   </View>
                 </ImageBackground>
@@ -219,17 +250,18 @@ function DetailsScreen() {
                   <Text style={styles.time_title}>{strings.location}:</Text>
                   <Text style={styles.time_title}> {item?.location}</Text>
                 </View>
-
-                { isLogin == "2" &&
                   <View style={{marginTop: 8}}>
-                    <Text style={styles.text_contact}>{strings.contact_person}:</Text>
+                    <Text style={styles.text_contact}>{isLogin == "2" ? strings.contact_person : strings.posted_person}:</Text>
                     <Text style={styles.text_contact_}>{user.name}</Text>
-                    <TouchableOpacity onPress={()=>{void makeACall()}}>
-                      <Text style={styles.text_contact_}>{user.mobile}</Text>
-                    </TouchableOpacity>
-                    <Text style={styles.text_contact_}>{user.email}</Text>
+                    { isLogin == "2" &&
+                      <>
+                        <TouchableOpacity onPress={()=>{void makeACall()}}>
+                          <Text style={styles.text_contact_}>{user.mobile}</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.text_contact_}>{user.email}</Text>
+                      </>
+                    }
                   </View>
-                }
               </View>
             </ScrollView>
           </View>

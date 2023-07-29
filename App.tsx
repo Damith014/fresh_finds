@@ -9,6 +9,7 @@ import DrawerNavigation from './src/navigations/DrawerNavigation';
 import DetailsScreen from './src/screens/DetailsScreen';
 import PostScreen from './src/screens/PostScreen';
 import SearchScreen from './src/screens/SearchScreen';
+import EditPostScreen from './src/screens/EditPostScreen';
 const Stack = createStackNavigator<RootNavigation>();
 function App(){
   return(
@@ -53,6 +54,11 @@ function App(){
             name='Search'
             component={SearchScreen}
             options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="EditPost"
+            component={EditPostScreen}
+            options={{ headerShown: false }}
           />
           </Stack.Navigator>
       </NavigationContainer>

@@ -139,11 +139,56 @@ export const styles = StyleSheet.create({
     marginTop: 4,
     textAlign:'center'
   },
+  text_placeholder_: {
+    width: "88%",
+    fontFamily:'NotoSansSinhala-Regular',
+    fontSize: 12,
+    color: colors.dark_gray,
+    marginLeft: 8,
+    minHeight: 48,
+    lineHeight: 22,
+  },
+  text: {
+    width: "90%",
+    fontFamily:'NotoSansSinhala-Medium',
+    fontSize: 12,
+    color: colors.black,
+    marginLeft: 8,
+    minHeight: 48,
+    lineHeight: 22,
+  },
   text_head:{
     marginTop: 22,
     fontWeight: '600',
     fontSize: 16,
     fontFamily:'NotoSansSinhala-Medium',
     color: colors.menu
-  }
+  },
+  text_view_: {
+    flexDirection: "row",
+    borderColor: colors.light_gray,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 48,
+    width: "100%",
+    marginTop: 8,
+  },
+  text_error_view: {
+    flexDirection: "row",
+    borderColor: colors.pure_red,
+    borderWidth: 1,
+    borderRadius: 10,
+    minHeight: 48,
+    width: "100%",
+    marginTop: 10,
+  },
+  text_error: {
+    width: "90%",
+    fontWeight: "600",
+    fontSize: 12,
+    color: colors.pure_red,
+    marginLeft: 4,
+    marginTop: 4,
+    lineHeight: 22,
+  },
 });
