@@ -27,5 +27,11 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-},
+  },
+  button_section: {
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
+    padding: 24,
+  },
 });

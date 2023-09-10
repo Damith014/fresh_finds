@@ -46,6 +46,8 @@ function EditPostScreen() {
     { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
     { label: "අල වර්ග", value: "11" },
     { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
+    { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
+    { label: "අපනයන භාණ්ඩ", value: "14"}
   ]);
   let actionSheet = useRef<any>();
   let optionArray = ["Camera", "Photo & Video Libary", "Cancel"];
@@ -121,7 +123,7 @@ function EditPostScreen() {
     if (data.price == "") {
       is_error = true;
     }
-    if (data.quantity == "") {
+    if (data.quantity == "" && (data.category != "13" && data.category != "14")) {
       is_error = true;
     }
     if (data.description == "") {
@@ -184,8 +186,6 @@ function EditPostScreen() {
     if (index == 0) {
       let options = {
         mediaType: 'photo',
-        maxWidth: 300,
-        maxHeight: 550,
         quality: 1,
         saveToPhotos: true,
       };
@@ -203,8 +203,6 @@ function EditPostScreen() {
     } else if (index == 1) {
       let options = {
         mediaType: "photo",
-        maxWidth: 300,
-        maxHeight: 550,
         quality: 1,
       };
       launchImageLibrary(options, (response) => {
@@ -548,14 +546,14 @@ function EditPostScreen() {
           />
         </View>
         <View style={styles.input_section}>
-          <Text style={styles.text_title}>{strings.unit_price}</Text>
+          <Text style={styles.text_title}>{(data.category != "13" && data.category != "14")?strings.unit_price :(strings.unit_price).replace("1 Kg - ","")}</Text>
           <TextField
-            placeholder={strings.unit_price}
+            placeholder={(data.category != "13" && data.category != "14")?strings.unit_price :(strings.unit_price).replace("1 Kg - ","")}
             isEmpty={data.price == "" ? true : false}
             isError={data.price == "" ? true : false}
             isOtp={false}
             error={error.message}
-            isText={true}
+            isText={false}
             value={data.price}
             onChange={(value) => setData({
               ...data,
@@ -563,22 +561,24 @@ function EditPostScreen() {
             })}
           />
         </View>
-        <View style={styles.input_section}>
-          <Text style={styles.text_title}>{strings.quntity}</Text>
-          <TextField
-            placeholder={strings.quntity}
-            isEmpty={data.quantity == "" ? true : false}
-            isError={data.quantity == "" ? true : false}
-            isOtp={false}
-            error={error.message}
-            isText={true}
-            value={data.quantity}
-            onChange={(value) => setData({
-              ...data,
-              quantity: value,
-            })}
-          />
-        </View>
+        {(data.category != "13" && data.category != "14") &&
+          <View style={styles.input_section}>
+            <Text style={styles.text_title}>{strings.quntity}</Text>
+            <TextField
+              placeholder={strings.quntity}
+              isEmpty={data.quantity == "" ? true : false}
+              isError={data.quantity == "" ? true : false}
+              isOtp={false}
+              error={error.message}
+              isText={false}
+              value={data.quantity}
+              onChange={(value) => setData({
+                ...data,
+                quantity: value,
+              })}
+            />
+          </View>
+         }
         <View style={styles.input_section}>
           <Text style={styles.text_title}>{strings.details}</Text>
           <View style={data.description == "" ? styles.text_error_view : styles.text_view_}>

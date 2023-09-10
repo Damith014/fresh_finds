@@ -79,9 +79,11 @@ function OTPScreen() {
               AsyncStorage.setItem("account",  JSON.stringify(validate.respond.account![0]));
               navigation.replace('Drawer');
             } else {
+              AsyncStorage.setItem("is_login", "1"); //User
               navigation.navigate('Register');
             }
           } else {
+            AsyncStorage.setItem("is_login", "1"); //User
             navigation.navigate('Register');
           }
         } else {

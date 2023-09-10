@@ -54,12 +54,14 @@ const handleNotificationResponse = (response: any) => {
   };
 };
 const handleError = (errorObject: any) => {
+  console.log(errorObject);
+  
   return {
     items: null,
     users: null,
     respond: null,
-    status: errorObject.response.status,
-    message: errorObject.response.data.message,
+    status: errorObject?.response?.status ?? 600,
+    message: errorObject?.response?.data?.message,
   };
 };
 const Service = {
@@ -125,7 +127,7 @@ const Service = {
     return axios
       .post(url,
         data, 
-        {headers:{
+        { headers:{
         "Content-Type": "multipart/form-data",
         }})
       .then(handleFavoriteResponse)
@@ -156,7 +158,7 @@ const Service = {
     let url = `${baseURL()}register`;
     return axios
       .post(url,data)
-      .then(handleFavoriteResponse)
+      .then(handleValidateResponse)
       .catch(handleError);
   },
   update:async (data: any) => {

@@ -39,17 +39,40 @@ function RegisterScreen() {
       is_error = true;
     }
     if (!is_error) {
-      let token = await messaging().getToken();
+      // let token = await messaging().getToken();
       let payload = {
         "name" : data.name,
         "email": data.email,
         "mobile": `${mobile.replace(/\s/g, '')}`,
-        "token": token
+        "token": 'token'
       }
       setIsLoading(true);
       let response = await Service.register(payload);
-      if(response.status == "100") {
-        navigation.replace('Drawer');
+      if (response.status == "100") {
+        setIsLoading(false);
+        if ( response.respond?.valid) {
+          if (response.respond?.registered) {
+            if (0 < (response.respond?.account ?? [])?.length){
+              if (response.respond.account![0].type == "1") {
+                AsyncStorage.setItem("is_login", "1"); //User
+              } else {
+                AsyncStorage.setItem("is_login", "2"); //Admin
+              }
+              AsyncStorage.setItem("account",  JSON.stringify(response.respond.account![0]));
+              navigation.replace('Drawer');
+            } else {
+              AsyncStorage.setItem("is_login", "1"); //User
+              navigation.navigate('Register');
+            }
+          } else {
+            AsyncStorage.setItem("is_login", "1"); //User
+            navigation.navigate('Register');
+          }
+        } else {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
       }
       setIsLoading(false);
     }

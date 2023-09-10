@@ -34,6 +34,9 @@ function DetailsScreen() {
   const [account, setAccount] = useState("");
   const [edit, setEdit] = useState(false);
   const regex = /පොල්/g;
+  const regex1 = /පොල් තෙල්/g;
+  const regex2 = /Dc පොල්/g;
+  const regex3 = /පොල්තෙල්/g;
   const item = route.params.item;
   const isManage = route.params.isMange;
   let images_ = item?.images.split(",") ?? [];
@@ -85,7 +88,7 @@ function DetailsScreen() {
     setImages(images);
   }
   function makeACall() {
-    Linking.openURL(`tel:${user.mobile}`);
+    Linking.openURL(`tel:+${user.mobile}`);
   }
   async function clickFavorite(favorite: boolean) {
     let payload = {
@@ -121,7 +124,7 @@ function DetailsScreen() {
     setEdit(true);
   }
   let quantity_type =
-    item?.title.match(regex) == null ? strings.price_per : strings.price_nutes;
+    (item?.title.match(regex1) || item?.title.match(regex2) || item?.title.match(regex3)) != null ? strings.price_per : item?.title.match(regex) == null ? strings.price_per : strings.price_nutes;
   return (
     <View style={styles.container}>
       <View style={styles.main_view}>
@@ -170,6 +173,7 @@ function DetailsScreen() {
                 <ImageBackground
                   style={{ width: "100%", height: "100%" }}
                   source={{ uri: image.img }}
+                  imageStyle={{resizeMode: 'contain'}}
                 >
                   <View style={styles.row_section}>
                     <TouchableOpacity
@@ -196,14 +200,11 @@ function DetailsScreen() {
                         onPress={() => void clickFavorite(!favorite)}
                         style={styles.fav_button}
                       >
-                        
-                            <Icon
+                        <Icon
                               name= { favorite? "heart-sharp" : "heart-outline"}
                               size={30}
                               color={colors.black}
                             />
-                        
-                        
                       </TouchableOpacity>)}
                     </View>
                   </View>
@@ -235,10 +236,12 @@ function DetailsScreen() {
                     })}
                   </Text>
                 </View>
-                <View style={styles.row_section}>
-                  <Text style={styles.text_title_q}>{item?.quantity}</Text>
-                  <Text style={styles.price_title}> {quantity_type}</Text>
-                </View>
+                {item?.category != "13" && item?.category != "14" &&
+                  <View style={styles.row_section}>
+                    <Text style={styles.text_title_q}>{item?.quantity}</Text>
+                    <Text style={styles.price_title}> {quantity_type}</Text>
+                  </View>
+                }
                 <View style={styles.row_section}>
                   <Text style={styles.time_title}>
                     {moment(Date.parse(item?.updated_at as string)).format(

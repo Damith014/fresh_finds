@@ -75,6 +75,21 @@ export default function TextField({
           />
         </View>
       )}
+      {!isText && (
+        <View style={isError ? styles.text_error_view : styles.text_view}>
+          <TextInput
+            placeholder={placeholder}
+            value={value}
+            style={isEmpty ? styles.text_placeholder : styles.text}
+            autoCapitalize="none"
+            returnKeyType={"next"}
+            autoCorrect={false}
+            clearButtonMode="while-editing"
+            keyboardType='numeric'
+            onChangeText={onChange}
+          />
+        </View>
+      )}
       {isOtp && (
         <View style={isError ? styles.text_error_view : styles.otp_view}>
           <TextInput

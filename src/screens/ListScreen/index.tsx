@@ -41,6 +41,7 @@ function ListScreen(){
         if (type != "0") {
           let user = await AsyncStorage.getItem("account");
           let account = JSON.parse(user ?? '') as Account;
+          
           if (account.type == "2") {
             await getItems(0);
           } else {
@@ -122,45 +123,47 @@ function ListScreen(){
             textStyle={{ color: "#000" }}
           />
         </View>
-        <Dropdown
-            style={styles.dropdown}
-            placeholderStyle={{
-              color: colors.dark_gray,
-              fontWeight: "300",
-              fontSize: 12,
-              fontFamily: 'NotoSansSinhala-Medium'
-            }}
-            selectedTextStyle={{
-              color: colors.black,
-              fontWeight: "600",
-              fontSize: 12,
-              fontFamily: 'NotoSansSinhala-Medium'
-            }}
-            inputSearchStyle={{
-              height: 40,
-              fontSize: 12,
-              fontFamily: 'NotoSansSinhala-Medium'
-            }}
-            iconStyle={{
-              width: 20,
-              height: 20,
-            }}
-            itemTextStyle={{
-              fontSize: 12,
-              fontFamily: 'NotoSansSinhala-Medium'
-            }}
-            data={category}
-            fontFamily= 'NotoSansSinhala-Medium'
-            maxHeight={200}
-            labelField="label"
-            valueField="value"
-            placeholder={strings.category}
-            searchPlaceholder="Search..."
-            value={selected}
-            onChange={(item) => {
-              setSelected(item.value)
-            }}
-          />
+        {isLogin != "0" &&
+          <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={{
+                color: colors.dark_gray,
+                fontWeight: "300",
+                fontSize: 12,
+                fontFamily: 'NotoSansSinhala-Medium'
+              }}
+              selectedTextStyle={{
+                color: colors.black,
+                fontWeight: "600",
+                fontSize: 12,
+                fontFamily: 'NotoSansSinhala-Medium'
+              }}
+              inputSearchStyle={{
+                height: 40,
+                fontSize: 12,
+                fontFamily: 'NotoSansSinhala-Medium'
+              }}
+              iconStyle={{
+                width: 20,
+                height: 20,
+              }}
+              itemTextStyle={{
+                fontSize: 12,
+                fontFamily: 'NotoSansSinhala-Medium'
+              }}
+              data={category}
+              fontFamily= 'NotoSansSinhala-Medium'
+              maxHeight={200}
+              labelField="label"
+              valueField="value"
+              placeholder={strings.category}
+              searchPlaceholder="Search..."
+              value={selected}
+              onChange={(item) => {
+                setSelected(item.value)
+              }}
+            />
+          }
           {isLogin != "0" &&
             <FlatList
               style={isLogin != "2"? {marginBottom: 80} : {marginBottom: 0}}
@@ -179,7 +182,7 @@ function ListScreen(){
           {isLogin != "2" &&
             <View style={styles.button_section}>
               <Button
-                label={isLogin == "0" ? strings.login : strings.post_ad}
+                label={isLogin == "0" ? strings.login_post : strings.post_ad}
                 onPress={() => {
                   isLogin == "0" ? clickLogin() : clickPost();
                 }}

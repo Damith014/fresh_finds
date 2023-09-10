@@ -12,6 +12,8 @@ import Tag from "../../components/Cards/Tag";
 import Service from "../../service/Service";
 import EmptyCard from "../../components/Cards/EmptyCard";
 import strings from "../../constants/strings";
+import { handleUserStatus } from "../../constants/auth";
+import Button from "../../components/Button";
 
 type homeScreenProp = StackNavigationProp<RootNavigation, "Drawer">;
 function HomeScreen() {
@@ -20,6 +22,7 @@ function HomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<any>([]);
   const [selected, setSelected] = useState("0");
+  const [isLogin, setLogin] = useState("0");
   const [category] = useState([
     { label: "සියල්ල", value: "0" },
     { label: "එළවළු වර්ග", value: "1" },
@@ -34,10 +37,14 @@ function HomeScreen() {
     { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
     { label: "අල වර්ග", value: "11" },
     { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
+    { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
+    { label: "අපනයන භාණ්ඩ", value: "14"}
   ]);
   useEffect(() => {
     getProgram().catch(error => {});
     async function getProgram() {
+      let type = await handleUserStatus();
+      setLogin(type)
       await getItems(0);
     }
   }, []);
@@ -57,6 +64,12 @@ function HomeScreen() {
   }
   function callBack() {
     
+  }
+  function clickLogin() {
+    navigation.navigate('Mobile');
+  }
+  function clickPost() {
+    navigation.navigate('Post');
   }
   function onPress(tag: string, index: number) {
     dateTagRef.current.scrollToIndex({ animated: true, index, viewPosition:0.5 });
@@ -105,6 +118,7 @@ function HomeScreen() {
        </View>
       <View style={{ marginTop: 12 }}></View>
       <FlatList
+      style={isLogin != "2"? {marginBottom: 70} : {marginBottom: 0}}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           data={items}
@@ -115,6 +129,17 @@ function HomeScreen() {
           nestedScrollEnabled={true}
           ListEmptyComponent={EmptyListMessage}
         />
+        {isLogin != "2" &&
+            <View style={styles.button_section}>
+              <Button
+                label={isLogin == "0" ? strings.login_post : strings.post_ad}
+                onPress={() => {
+                  isLogin == "0" ? clickLogin() : clickPost();
+                }}
+                isActive={false}
+              />
+            </View>
+          }
     </View>
   );
 }
