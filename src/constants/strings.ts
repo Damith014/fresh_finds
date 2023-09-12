@@ -81,6 +81,9 @@ export default {
     contact_person: 'ඇමතිය යුතු පුද්ගලයා',
     posted_person: 'පළ කළ පුද්ගලයා',
 
-    all:'සියල්ල'
+    all:'සියල්ල',
+
+    district: 'දිස්ත්‍රීක්ක',
+    city: 'නගරය'
 
 }
