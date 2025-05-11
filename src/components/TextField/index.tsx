@@ -75,7 +75,7 @@ export default function TextField({
           />
         </View>
       )}
-      {!isText && (
+      {(!isText && !isContry) && (
         <View style={isError ? styles.text_error_view : styles.text_view}>
           <TextInput
             placeholder={placeholder}

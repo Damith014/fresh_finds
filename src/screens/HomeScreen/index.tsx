@@ -38,7 +38,8 @@ function HomeScreen() {
     { label: "අල වර්ග", value: "11" },
     { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
     { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
-    { label: "අපනයන භාණ්ඩ", value: "14"}
+    { label: "අපනයන භාණ්ඩ", value: "14"},
+    { label: "ගැණුම්කරැවන්", value: "15"}
   ]);
   useEffect(() => {
     getProgram().catch(error => {});

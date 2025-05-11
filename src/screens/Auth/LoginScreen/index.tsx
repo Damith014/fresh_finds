@@ -89,6 +89,7 @@ function LoginScreen() {
               value={mobile}
               onChange={(value) => onChangeMobile(value)}
               isContry={true}
+              isText={false}
             />
           </View>
           <View style={styles.button_section}>

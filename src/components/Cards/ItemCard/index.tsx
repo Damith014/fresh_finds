@@ -39,7 +39,8 @@ export default function ItemCard({
     { label: "අල වර්ග", value: "11" },
     { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
     { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
-    { label: "අපනයන භාණ්ඩ", value: "14"}
+    { label: "අපනයන භාණ්ඩ", value: "14"},
+    { label: "ගැණුම්කරැවන්", value: "15"}
   ];
   const [districts] = useState([
     { label: "කොළඹ", value: "1" },
@@ -275,13 +276,31 @@ export default function ItemCard({
     { label: "වවුනියාව නගරය", value: "25" },
   ]);
   let type = category[Number(item?.category ?? 0)].label;
-  const regex = /පොල්/g;
-  const regex1 = /පොල් තෙල්/g;
-  const regex2 = /Dc පොල්/g;
-  const regex3 = /පොල්තෙල්/g;
-  let quantity_type =
-    (item?.title.match(regex1) || item?.title.match(regex2) || item?.title.match(regex3)) != null ? strings.price_per : item?.title.match(regex) == null ? strings.price_per : strings.price_nutes;
-  
+  const regex = /පොල්/g; //ගෙඩි
+  const regex1 = /පොල් තෙල්/g; //කි.ග්රෑ
+  const regex2 = /Dc පොල්/g; //කි.ග්රෑ
+  const regex3 = /පොල්තෙල්/g; //කි.ග්රෑ
+  const regex4 = /පුවක්/g; //ගෙඩි
+  const regex5 = /බුලත්/g; //කොළ
+  const regex6 = /දුම්කොල/g; //කොළ
+
+  let quantity_type = strings.price_per;
+  if ((item?.title.match(regex1) || 
+  item?.title.match(regex2) || 
+  item?.title.match(regex3))) {
+    quantity_type = strings.price_per;
+  } else if (item?.title.match(regex) != null) {
+    quantity_type = strings.price_nutes;
+  } else if (item?.title.match(regex4) != null) {
+    quantity_type = strings.price_nutes;
+  } else if (item?.title.match(regex5) != null) {
+    quantity_type = strings.price_leaves;
+  } else if (item?.title.match(regex6) != null) {
+    quantity_type = strings.price_leaves;
+  }
+  if (item?.category == "12") {
+    quantity_type = strings.price_miti;
+  }
   let images = item?.images.split(",") ?? [];
   let image = images.length == 0 ? `https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png` : `http://sigirisoft.lk/fresh_backend/upload/${images[0]}`;
   function toTimestamp(strDate: any){
@@ -331,6 +350,14 @@ export default function ItemCard({
     });
     return `${city}`
   }
+  function price(price: string) {
+    var splitted = price.split("-");
+    if (splitted.length == 1) {
+      return parseFloat(splitted[0]).toLocaleString(undefined, { minimumFractionDigits: 2 })
+    } else {
+      return `${parseFloat(splitted[0]).toLocaleString(undefined, { minimumFractionDigits: 2 })} - ${parseFloat(splitted[1]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` 
+    }
+  }
   return (
     <View style={isPending? styles.view_pending: styles.view_main}>
       <TouchableOpacity
@@ -353,16 +380,16 @@ export default function ItemCard({
           </View>
           <View style={styles.colum_view_a}>
             <View style={{ flexDirection: "row" }}>
-              <View style={{ width: "50%", alignItems: "flex-start" }}>
+              <View style={{ width: "40%", alignItems: "flex-start" }}>
                 <Text style={styles.text_title}>{item?.title}</Text>
                 <View style={styles.row_section}>
                   <Text style={styles.time_title}>{getLocation(item?.location ?? "")}</Text>
                 </View>
                 <Text style={styles.time_sub_title}>{type}</Text>
               </View>
-              <View style={{ width: "50%" }}>
+              <View style={{ width: "60%" }}>
                 <Text style={styles.text_title_right}>
-                  RS {parseFloat(item?.price ?? "0").toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                  Rs {price(item?.price ?? "0")}
                 </Text>
                 {item?.category != "13" && item?.category != "14" &&
                   <Text style={styles.price_title}>{item?.quantity} {quantity_type}</Text>

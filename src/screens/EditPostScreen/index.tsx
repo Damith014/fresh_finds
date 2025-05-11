@@ -32,7 +32,6 @@ function EditPostScreen() {
   const route = useRoute<editPostScreenRouteProp>();
   const navigation = useNavigation<editPostScreenProp>();
   const item = route.params.item
-  
   const [category] = useState([
     { label: "එළවළු වර්ග", value: "1" },
     { label: "පළතුරු වර්ග", value: "2" },
@@ -47,7 +46,24 @@ function EditPostScreen() {
     { label: "අල වර්ග", value: "11" },
     { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
     { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
-    { label: "අපනයන භාණ්ඩ", value: "14"}
+    { label: "අපනයන භාණ්ඩ", value: "14"},
+    { label: "ගැණුම්කරැවන්", value: "15"}
+  ]);
+  const [category_sub] = useState([
+    { label: "එළවළු වර්ග", value: "1" },
+    { label: "පළතුරු වර්ග", value: "2" },
+    { label: "ධාන්‍ය වර්ග", value: "3" },
+    { label: "කුළු බඩු වර්ග", value: "4" },
+    { label: "කරවල වර්ග", value: "5" },
+    { label: "පොල්, DC පොල්, කොප්පරා, පොල්තෙල්", value: "6" },
+    { label: "පුවක්, කරැංකා, දුම්කොල, බුලත්", value: "7" },
+    { label: "විජලනය / අගය එකතු කළ ආහාර", value: "8" },
+    { label: "බයිට් වර්ග හා රස කැවිලි", value: "9" },
+    { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
+    { label: "අල වර්ග", value: "11" },
+    { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
+    { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
+    { label: "අපනයන භාණ්ඩ", value: "14"},
   ]);
   const [districts] = useState([
     { label: "කොළඹ", value: "1" },
@@ -289,6 +305,7 @@ function EditPostScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [select, setSelectImage] = useState(0);
   const [cat, setCategory] = useState<any>();
+  const [cat_s, setCategorySub] = useState<any>();
   const [label, setLable] = useState("");
   const [dis, setDistrict] = useState("");
   const [cit, setCity] = useState("");
@@ -297,6 +314,7 @@ function EditPostScreen() {
     item_id: "",
     user_id: "",
     category: "",
+    sub_category: "",
     district: "",
     city: "",
     location: "",
@@ -305,10 +323,13 @@ function EditPostScreen() {
     quantity: "",
     description: "",
     images: ""
-  })
+  });
   const [error, setError] = useState({
     user_id: false,
     category: false,
+    sub_category: false,
+    district: false,
+    city: false,
     location: false,
     title: false,
     price: false,
@@ -316,22 +337,22 @@ function EditPostScreen() {
     description: false,
     images: false,
     message: strings.required,
-  })
+  });
   useEffect(() => {
     setIsLoading(false);
     getUser().catch(error => {});
     async function getUser() {
       let user = await AsyncStorage.getItem("account");
       let account = JSON.parse(user ?? '') as Account;
-      var splitted = item?.location.split("-");
-      onclickDistrict(splitted[0])
+      var splitted = item?.location.split("-") ?? [];
       setData({
         ...data,
         item_id: item?.id ?? "",
         user_id: account.id,
         category: item?.category ?? "",
+        sub_category: item?.sub_category ?? "",
         district: splitted[0],
-        city: splitted[1],
+        city: item?.location ?? "",
         location: item?.location ?? "",
         title: item?.title ?? "",
         price: item?.price ?? "",
@@ -339,7 +360,11 @@ function EditPostScreen() {
         description: item?.description ?? "",
         images: item?.images ?? ""
       })
+      setDistrict(splitted[0]);
+      onclickDistrict(splitted[0]);
+      setCity(item?.location ?? "");
       setCategory(item?.category)
+      setCategorySub(item?.sub_category)
       let images_ = item?.images.split(",") ?? [];
       setImages(images_);
       let img_:any[] = []
@@ -396,6 +421,8 @@ function EditPostScreen() {
         "item_id" : data.item_id,
         "user_id" : data.user_id,
         "category": data.category,
+        "sub_category": data.sub_category,
+        "districts": data.district,
         "location": data.city,
         "title": data.title,
         "price": data.price,
@@ -579,11 +606,52 @@ function EditPostScreen() {
               setData({
                 ...data,
                 category: item.value,
+                sub_category: item.value,
               })
             }}
           />
         </View>
-
+        { cat == "15" &&
+          <View style={ styles.input_section}>
+            <Text style={styles.text_title}>{strings.category}</Text>
+            <Dropdown
+              style={cat_s == "" ? styles.dropdown_error :styles.dropdown}
+              placeholderStyle={{
+                color: colors.dark_gray,
+                fontWeight: "300",
+                fontSize: 12,
+              }}
+              selectedTextStyle={{
+                color: colors.black,
+                fontWeight: "600",
+                fontSize: 12,
+              }}
+              inputSearchStyle={{
+                height: 40,
+                fontSize: 12,
+              }}
+              iconStyle={{
+                width: 20,
+                height: 20,
+              }}
+              data={category_sub}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={strings.category}
+              searchPlaceholder="Search..."
+              value={data.sub_category}
+              onChange={(item) => {
+                setCategorySub(item.value);
+                setData({
+                  ...data,
+                  sub_category: item.value,
+                })
+              }}
+            />
+          </View>
+        }
         <View style={ styles.input_section}>
           <Text style={styles.text_title}>{strings.district}</Text>
           <Dropdown
@@ -859,9 +927,9 @@ function EditPostScreen() {
         <View style={styles.input_section}>
           <Text style={styles.text_title}>
             {strings.title}
-            {strings.sub_title_1}
-            {label.replace(' වර්ග', '')}
-            {strings.sub_title_2}
+            {data.category == "15" ? strings.sub_title_3 : strings.sub_title_1}
+            {data.category == "15" ? '' : label.replace(' වර්ග', '')}
+            {data.category == "15" ? '' : strings.sub_title_2}
           </Text>
           <TextField
             placeholder={strings.title}
@@ -878,9 +946,9 @@ function EditPostScreen() {
           />
         </View>
         <View style={styles.input_section}>
-          <Text style={styles.text_title}>{(data.category != "13" && data.category != "14")?strings.unit_price :(strings.unit_price).replace("1 Kg - ","")}</Text>
+          <Text style={styles.text_title}>{(data.category != "13" && data.category != "14")? ( data.category == "15" ? (strings.unit_price_range) : strings.unit_price) :(strings.unit_price).replace("1 Kg - ","")}</Text>
           <TextField
-            placeholder={(data.category != "13" && data.category != "14")?strings.unit_price :(strings.unit_price).replace("1 Kg - ","")}
+            placeholder={(data.category != "13" && data.category != "14")? ( data.category == "15" ? (strings.unit_price_range) : strings.unit_price) :(strings.unit_price).replace("1 Kg - ","")}
             isEmpty={data.price == "" ? true : false}
             isError={data.price == "" ? true : false}
             isOtp={false}

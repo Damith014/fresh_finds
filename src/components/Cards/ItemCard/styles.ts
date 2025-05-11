@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
     },
     text_title: {
       fontFamily:'NotoSansSinhala-Bold',
-      fontSize: 16,
+      fontSize: 14,
       color: colors.title_color,
       marginTop:8
     },
     text_title_right: {
       fontFamily:'NotoSansSinhala-Bold',
-      fontSize: 16,
+      fontSize: 13,
       textAlign:'right',
       color: colors.title_color,
       marginRight:8,

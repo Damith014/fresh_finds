@@ -25,13 +25,48 @@ function SearchScreen() {
   const navigation = useNavigation<listScreenProp>();
   const [isLoading, setIsLoading] = useState(false);
   const [items, setItems] = useState<any>([]);
+  const [allItems, setAllItems] = useState<any>([]);
   const [text, setText] = useState("");
   const [location, setLocation] = useState("සියලු ශ්‍රී ලංකාව");
   const [modalVisible, setModalVisible] = useState(false);
   const [cat, setCategory] = useState("");
+  const [cat_s, setCategorySub] = useState("");
   const [dis, setDistrict] = useState("");
   const [cit, setCity] = useState("");
   const [citys, setCitys] = useState<any>([]);
+  const [category] = useState([
+    { label: "එළවළු වර්ග", value: "1" },
+    { label: "පළතුරු වර්ග", value: "2" },
+    { label: "ධාන්‍ය වර්ග", value: "3" },
+    { label: "කුළු බඩු වර්ග", value: "4" },
+    { label: "කරවල වර්ග", value: "5" },
+    { label: "පොල්, DC පොල්, කොප්පරා, පොල්තෙල්", value: "6" },
+    { label: "පුවක්, කරැංකා, දුම්කොල, බුලත්", value: "7" },
+    { label: "විජලනය / අගය එකතු කළ ආහාර", value: "8" },
+    { label: "බයිට් වර්ග හා රස කැවිලි", value: "9" },
+    { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
+    { label: "අල වර්ග", value: "11" },
+    { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
+    { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
+    { label: "අපනයන භාණ්ඩ", value: "14"},
+    { label: "ගැණුම්කරැවන්", value: "15"}
+  ]);
+  const [category_sub] = useState([
+    { label: "එළවළු වර්ග", value: "1" },
+    { label: "පළතුරු වර්ග", value: "2" },
+    { label: "ධාන්‍ය වර්ග", value: "3" },
+    { label: "කුළු බඩු වර්ග", value: "4" },
+    { label: "කරවල වර්ග", value: "5" },
+    { label: "පොල්, DC පොල්, කොප්පරා, පොල්තෙල්", value: "6" },
+    { label: "පුවක්, කරැංකා, දුම්කොල, බුලත්", value: "7" },
+    { label: "විජලනය / අගය එකතු කළ ආහාර", value: "8" },
+    { label: "බයිට් වර්ග හා රස කැවිලි", value: "9" },
+    { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
+    { label: "අල වර්ග", value: "11" },
+    { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
+    { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
+    { label: "අපනයන භාණ්ඩ", value: "14"},
+  ]);
   const [districts] = useState([
     { label: "කොළඹ", value: "1" },
     { label: "නුවර", value: "2" },
@@ -268,36 +303,151 @@ function SearchScreen() {
   const [data, setData] = useState({
     district: "",
     city: "",
+    category: "",
+    sub_category: ""
   });
-  async function clickSearch(type: string) {
-    setLocation('සියලු ශ්‍රී ලංකාව');
-    setIsLoading(true);
-    let payload = {
-      tag: type,
-      text: text,
-    };
-    let response = await Service.search(payload);
-    if (response.status == "100") {
-      setItems(response.items);
-      setIsLoading(false);
-    } else {
-      setIsLoading(false);
+  useEffect(() => {
+    getProgram().catch(error => {});
+    async function getProgram() {
+      await getItems(0);
     }
+  }, []);
+  async function getItems(tag: number){
+    let payload = {
+      "category" : tag
+    }
+    let response = await Service.home(payload);
+    if (response.status == "100") {
+      setAllItems(response.items)
+    }
+  }
+  function callBack() {
+    
+  }
+  async function clickSearch(type: string) {
+    setIsLoading(true);
+    setItems([]);
+    let array: any[] = [];
+    if (text != ""){
+      allItems?.forEach((element: any) => {
+        if (element.title.includes(text)) {
+          array.push(element);
+        }
+      });
+      setItems(array);
+    }
+    console.log(items);
+    
+    if (data.category != "") {
+      array?.forEach((element: any) => {
+        if (element.category == data.category) {
+          array.push(element);
+        }
+      });
+      setItems(array);
+    }
+    if (data.sub_category != "") {
+      array?.forEach((element: any) => {
+        if (element.sub_category == data.sub_category) {
+          array.push(element);
+        }
+      });
+      setItems(array);
+    }
+    if (data.district != "") {
+      array?.forEach((element: any) => {
+        if (element.districts == data.district) {
+          array.push(element);
+        }
+      });
+      setItems(array);
+    }
+    if (data.city != "") {
+      array?.forEach((element: any) => {
+        if (element.location == data.city) {
+          array.push(element);
+        }
+      });
+      setItems(array);
+    }
+    setIsLoading(false);
+  }
+  async function clickClearSearch() {
+    setIsLoading(true);
+    setLocation('සියලු ශ්‍රී ලංකාව');
+    setModalVisible(!modalVisible);
+    setData({
+      district: "",
+      city: "",
+      category: "",
+      sub_category: ""
+    });
+    setItems([]);
     setIsLoading(false);
   }
   async function clickLocationSearch() {
     setModalVisible(!modalVisible);
     setIsLoading(true);
-    let payload = {
-      tag: "location",
-      text: data.city,
-    };
-    let response = await Service.search(payload);
-    if (response.status == "100") {
-      setItems(response.items);
-      setIsLoading(false);
-    } else {
-      setIsLoading(false);
+    setItems([]);
+    let array: any[] = [];
+    if (data.category != ""){
+      allItems?.forEach((element: any) => {
+        if (element.category == data.category) {
+          array.push(element);
+        }
+      });
+      setItems(array);
+    }
+    if (data.sub_category != "") {
+      if (array.length != 0) {
+        array?.forEach((element: any) => {
+          if (element.sub_category == data.sub_category) {
+            array.push(element);
+          }
+        });
+        setItems(array);
+      } else {
+        allItems?.forEach((element: any) => {
+          if (element.sub_category == data.sub_category) {
+            array.push(element);
+          }
+        });
+        setItems(array);
+      }
+    }
+    if (data.district != "") {
+      if (array.length != 0) {
+        array?.forEach((element: any) => {
+          if (element.districts == data.district) {
+            array.push(element);
+          }
+        });
+        setItems(array);
+      } else {
+        allItems?.forEach((element: any) => {
+          if (element.districts == data.district) {
+            array.push(element);
+          }
+        });
+        setItems(array);
+      }
+    }
+    if (data.city != "") {
+      if (array.length != 0) {
+        array?.forEach((element: any) => {
+          if (element.location == data.city) {
+            array.push(element);
+          }
+        });
+        setItems(array);
+      } else {
+        allItems?.forEach((element: any) => {
+          if (element.location == data.city) {
+            array.push(element);
+          }
+        });
+        setItems(array);
+      }
     }
     setIsLoading(false);
   }
@@ -363,8 +513,88 @@ function SearchScreen() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.text_title}> දිස්ත්‍රීක්කය හෝ නගරය තෝරන්න</Text>
+            <Text style={styles.text_title}> {`වර්ගය, දිස්ත්‍රීක්කය හෝ නගරය \nතෝරන්න`}</Text>
             <View style={{width:300}}>
+              <View style={styles.input_section}>
+                <Text style={styles.text_title_1}>{strings.category_}</Text>
+                <Dropdown
+                  style={styles.dropdown}
+                  placeholderStyle={{
+                    color: colors.dark_gray,
+                    fontWeight: "300",
+                    fontSize: 12,
+                  }}
+                  selectedTextStyle={{
+                    color: colors.black,
+                    fontWeight: "600",
+                    fontSize: 12,
+                  }}
+                  inputSearchStyle={{
+                    height: 40,
+                    fontSize: 12,
+                  }}
+                  iconStyle={{
+                    width: 20,
+                    height: 20,
+                  }}
+                  data={category}
+                  search
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={strings.category_}
+                  searchPlaceholder="Search..."
+                  value={data.category}
+                  onChange={(item) => {
+                    setCategory(item.value);
+                    setData({
+                      ...data,
+                      category: item.value,
+                    });
+                  }}
+                />
+              </View>
+              { cat == "15" &&
+                <View style={ styles.input_section}>
+                  <Text style={styles.text_title_1}>{strings.category_}</Text>
+                  <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={{
+                      color: colors.dark_gray,
+                      fontWeight: "300",
+                      fontSize: 12,
+                    }}
+                    selectedTextStyle={{
+                      color: colors.black,
+                      fontWeight: "600",
+                      fontSize: 12,
+                    }}
+                    inputSearchStyle={{
+                      height: 40,
+                      fontSize: 12,
+                    }}
+                    iconStyle={{
+                      width: 20,
+                      height: 20,
+                    }}
+                    data={category_sub}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={strings.category}
+                    searchPlaceholder="Search..."
+                    value={data.sub_category}
+                    onChange={(item) => {
+                      setCategorySub(item.value);
+                      setData({
+                        ...data,
+                        sub_category: item.value,
+                      })
+                    }}
+                  />
+                </View>
+              }
               <View style={styles.input_section}>
                 <Text style={styles.text_title_1}>{strings.district}</Text>
                 <Dropdown
@@ -396,7 +626,6 @@ function SearchScreen() {
                   searchPlaceholder="Search..."
                   value={data.district}
                   onChange={(item) => {
-                    setCategory(item.label);
                     setLocation(item.label);
                     onclickDistrict(item.value);
                     setDistrict(item.value);
@@ -438,7 +667,7 @@ function SearchScreen() {
                   searchPlaceholder="Search..."
                   value={data.city}
                   onChange={(item) => {
-                    setLocation(`${cat} > ${item.label}`);
+                    setLocation(`${location} > ${item.label}`);
                     setCity(item.value);
                     setData({
                       ...data,
@@ -448,13 +677,24 @@ function SearchScreen() {
                 />
               </View>
               <View style={styles.button_section_1}>
-                <Button
-                  label={strings.search}
-                  onPress={() => {
-                    clickLocationSearch();
-                  }}
-                  isActive={false}
-                />
+                <View style={{flex: 1, marginRight: 2}}>
+                  <Button
+                    label={strings.reset}
+                    onPress={() => {
+                      clickClearSearch();
+                    }}
+                    isActive={true}
+                  />
+                </View>
+                <View style={{flex: 1, marginLeft:2}}>
+                  <Button
+                    label={strings.search}
+                    onPress={() => {
+                      clickLocationSearch();
+                    }}
+                    isActive={true}
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -472,6 +712,7 @@ function SearchScreen() {
               item={item}
               isManage={true}
               isPending={item.status == "5" ? true : false}
+              handleCallback={callBack}
             />
           );
         }}

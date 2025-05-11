@@ -11,10 +11,13 @@ export interface Item {
     id: string;
     user_id: string;
     category: string;
+    sub_category: string;
     location: string;
+    districts: string;
     title: string;
     price: string;
     quantity: string;
+    quantity_type: string;
     description: string;
     images: string;
     created_at: string;

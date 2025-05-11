@@ -26,6 +26,12 @@ export const styles = StyleSheet.create({
     marginLeft: 24,
     marginRight: 24,
   },
+  input_section_: {
+    marginTop: 15,
+    marginLeft: 24,
+    marginRight: 24,
+    flexDirection:'row'
+  },
   dropdown: {
     minHeight: 48,
     borderColor:colors.light_gray,

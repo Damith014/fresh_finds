@@ -25,7 +25,9 @@ export default {
     title:'දැන්වීමේ මාතෘකාව',
     sub_title_1:' - විකිණීමට ඇති ',
     sub_title_2:' වර්ගයෙහි නම පමණක් සඳහන් කරන්න',
-    unit_price:'1 Kg - මිල',
+    sub_title_3: ' - මිලදීගැනීමට අවශ්‍ය',
+    unit_price:'මිල (Rs)',
+    unit_price_range:'මිල පරාසය (Rs)',
     quntity:'ප්‍රමාණය',
     details:'විස්තර',
     post_button:'දැන්වීම පළ කරන්න',
@@ -40,6 +42,8 @@ export default {
     sample_content:'ගොටුකොළ මිටි තොග වශයෙන් ලබාදිය හැක මිටියක්  55. ඉතා ගුනාත්මක වැල් ගොටුකොළ. \n\nකුරුණෑගල දිස්ත්‍රික්කයේ වතුපොල් 50000ක් ඇත ..කලවමේ රු.76.00දෙනු ලැබේ ... තොග ගැනුම් කරුවන් පමණක් අමතන්න',
     price_per:'කි.ග්රෑ',
     price_nutes:'ගෙඩි',
+    price_leaves:'කොළ',
+    price_miti:'මිටි',
 
     approve:'අනුමත කරන්න',
     reject:'ප්‍රතික්ෂේප කරන්න',
@@ -66,6 +70,7 @@ export default {
     login_note_3:'පහසු වේලාවක දැන්වීම් බලන්න/වෙනස් කරන්න',
 
     search:'සොයන්න',
+    reset:'Clear',
 
     posted_ads: 'පළකල දැන්වීම්',
     approve_ads: 'අනුමත දැන්වීම්',
@@ -84,6 +89,7 @@ export default {
     all:'සියල්ල',
 
     district: 'දිස්ත්‍රීක්ක',
-    city: 'නගරය'
+    city: 'නගරය',
+    category_:'වර්ගය',
 
 }

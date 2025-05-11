@@ -33,10 +33,14 @@ function DetailsScreen() {
   const [isLogin, setLogin] = useState("0");
   const [account, setAccount] = useState("");
   const [edit, setEdit] = useState(false);
-  const regex = /පොල්/g;
-  const regex1 = /පොල් තෙල්/g;
-  const regex2 = /Dc පොල්/g;
-  const regex3 = /පොල්තෙල්/g;
+  const regex = /පොල්/g; //ගෙඩි
+  const regex1 = /පොල් තෙල්/g; //කි.ග්රෑ
+  const regex2 = /Dc පොල්/g; //කි.ග්රෑ
+  const regex3 = /පොල්තෙල්/g; //කි.ග්රෑ
+  const regex4 = /පුවක්/g; //ගෙඩි
+  const regex5 = /බුලත්/g; //කොළ
+  const regex6 = /දුම්කොල/g; //කොළ
+
   const item = route.params.item;
   const isManage = route.params.isMange;
   let images_ = item?.images.split(",") ?? [];
@@ -373,8 +377,32 @@ function DetailsScreen() {
   function clickEdit() {
     setEdit(true);
   }
-  let quantity_type =
-    (item?.title.match(regex1) || item?.title.match(regex2) || item?.title.match(regex3)) != null ? strings.price_per : item?.title.match(regex) == null ? strings.price_per : strings.price_nutes;
+  let quantity_type = strings.price_per;
+  if ((item?.title.match(regex1) || 
+  item?.title.match(regex2) || 
+  item?.title.match(regex3))) {
+    quantity_type = strings.price_per;
+  } else if (item?.title.match(regex) != null) {
+    quantity_type = strings.price_nutes;
+  } else if (item?.title.match(regex4) != null) {
+    quantity_type = strings.price_nutes;
+  } else if (item?.title.match(regex5) != null) {
+    quantity_type = strings.price_leaves;
+  } else if (item?.title.match(regex6) != null) {
+    quantity_type = strings.price_leaves;
+  }
+  if (item?.category == "12") {
+    quantity_type = strings.price_miti;
+  }
+  function price(price: string) {
+    var splitted = price.split("-");
+    console.log(splitted.length);
+    if (splitted.length == 1) {
+      return parseFloat(splitted[0]).toLocaleString(undefined, { minimumFractionDigits: 2 })
+    } else {
+      return `${parseFloat(splitted[0]).toLocaleString(undefined, { minimumFractionDigits: 2 })} - ${parseFloat(splitted[1]).toLocaleString(undefined, { minimumFractionDigits: 2 })}` 
+    }
+  }
   return (
     <View style={styles.container}>
       <View style={styles.main_view}>
@@ -480,10 +508,7 @@ function DetailsScreen() {
               <View style={styles.price_section}>
                 <View style={styles.row_section}>
                   <Text style={styles.text_title}>
-                    RS{" "}
-                    {parseFloat(item?.price ?? "0").toLocaleString(undefined, {
-                      minimumFractionDigits: 2,
-                    })}
+                    RS {price(item?.price ?? "0")}
                   </Text>
                 </View>
                 {item?.category != "13" && item?.category != "14" &&

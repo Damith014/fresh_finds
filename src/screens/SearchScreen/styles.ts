@@ -39,6 +39,7 @@ text_title: {
   fontSize: 14,
   marginBottom:8,
   color: colors.black,
+  textAlign:'center'
 },
 text_title_1: {
   fontFamily:'NotoSansSinhala-Bold',
@@ -129,6 +130,7 @@ modalView: {
   elevation: 5,
 },
 button_section_1: {
+  flexDirection:'row',
   marginTop: 20,
   marginLeft: 24,
   marginRight: 24,

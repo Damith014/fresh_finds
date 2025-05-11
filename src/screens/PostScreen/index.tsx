@@ -43,7 +43,24 @@ function PostScreen() {
     { label: "අල වර්ග", value: "11" },
     { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
     { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
-    { label: "අපනයන භාණ්ඩ", value: "14"}
+    { label: "අපනයන භාණ්ඩ", value: "14"},
+    { label: "ගැණුම්කරැවන්", value: "15"}
+  ]);
+  const [category_sub] = useState([
+    { label: "එළවළු වර්ග", value: "1" },
+    { label: "පළතුරු වර්ග", value: "2" },
+    { label: "ධාන්‍ය වර්ග", value: "3" },
+    { label: "කුළු බඩු වර්ග", value: "4" },
+    { label: "කරවල වර්ග", value: "5" },
+    { label: "පොල්, DC පොල්, කොප්පරා, පොල්තෙල්", value: "6" },
+    { label: "පුවක්, කරැංකා, දුම්කොල, බුලත්", value: "7" },
+    { label: "විජලනය / අගය එකතු කළ ආහාර", value: "8" },
+    { label: "බයිට් වර්ග හා රස කැවිලි", value: "9" },
+    { label: "මස්, බිත්තර හා මුහුදු ආහාර", value: "10" },
+    { label: "අල වර්ග", value: "11" },
+    { label: "රම්පේ, කරපිංචා, පලා වර්ග ඇතුලු කොල වර්ග", value: "12" },
+    { label: "ඩිලිවරි භාණ්ඩ", value: "13"},
+    { label: "අපනයන භාණ්ඩ", value: "14"},
   ]);
   const [districts] = useState([
     { label: "කොළඹ", value: "1" },
@@ -286,6 +303,7 @@ function PostScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [select, setSelectImage] = useState(0);
   const [cat, setCategory] = useState("");
+  const [cat_s, setCategorySub] = useState("");
   const [dis, setDistrict] = useState("");
   const [cit, setCity] = useState("");
   const [citys, setCitys] = useState<any>([]);
@@ -293,6 +311,7 @@ function PostScreen() {
   const [data, setData] = useState({
     user_id: "",
     category: "",
+    sub_category: "",
     district: "",
     city: "",
     location: "",
@@ -305,6 +324,7 @@ function PostScreen() {
   const [error, setError] = useState({
     user_id: false,
     category: false,
+    sub_category: false,
     location: false,
     title: false,
     price: false,
@@ -367,6 +387,8 @@ function PostScreen() {
       let payload = {
         "user_id" : data.user_id,
         "category": data.category,
+        "sub_category": data.sub_category,
+        "districts": data.district,
         "location": data.city,
         "title": data.title,
         "price": data.price,
@@ -566,10 +588,52 @@ function PostScreen() {
               setData({
                 ...data,
                 category: item.value,
+                sub_category: item.value,
               })
             }}
           />
         </View>
+        { cat == "15" &&
+          <View style={ styles.input_section}>
+            <Text style={styles.text_title}>{strings.category}</Text>
+            <Dropdown
+              style={cat_s == "" ? styles.dropdown_error :styles.dropdown}
+              placeholderStyle={{
+                color: colors.dark_gray,
+                fontWeight: "300",
+                fontSize: 12,
+              }}
+              selectedTextStyle={{
+                color: colors.black,
+                fontWeight: "600",
+                fontSize: 12,
+              }}
+              inputSearchStyle={{
+                height: 40,
+                fontSize: 12,
+              }}
+              iconStyle={{
+                width: 20,
+                height: 20,
+              }}
+              data={category_sub}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={strings.category}
+              searchPlaceholder="Search..."
+              value={data.sub_category}
+              onChange={(item) => {
+                setCategorySub(item.value);
+                setData({
+                  ...data,
+                  sub_category: item.value,
+                })
+              }}
+            />
+          </View>
+        }
         <View style={ styles.input_section}>
           <Text style={styles.text_title}>{strings.district}</Text>
           <Dropdown
@@ -847,9 +911,9 @@ function PostScreen() {
         <View style={styles.input_section}>
           <Text style={styles.text_title}>
             {strings.title}
-            {strings.sub_title_1}
-            {label.replace(' වර්ග', '')}
-            {strings.sub_title_2}
+            {data.category == "15" ? strings.sub_title_3 : strings.sub_title_1}
+            {data.category == "15" ? '' : label.replace(' වර්ග', '')}
+            {data.category == "15" ? '' : strings.sub_title_2}
           </Text>
           <TextField
             placeholder={strings.title}
@@ -866,9 +930,9 @@ function PostScreen() {
           />
         </View>
         <View style={styles.input_section}>
-          <Text style={styles.text_title}>{(data.category != "13" && data.category != "14")?strings.unit_price :(strings.unit_price).replace("1 Kg - ","")}</Text>
+          <Text style={styles.text_title}>{(data.category != "13" && data.category != "14")? ( data.category == "15" ? (strings.unit_price_range) : strings.unit_price) :(strings.unit_price).replace("1 Kg - ","")}</Text>
           <TextField
-            placeholder={(data.category != "13" && data.category != "14")?strings.unit_price :(strings.unit_price).replace("1 Kg - ","")}
+            placeholder={(data.category != "13" && data.category != "14")? ( data.category == "15" ? (strings.unit_price_range) : strings.unit_price) :(strings.unit_price).replace("1 Kg - ","")}
             isEmpty={data.price == "" ? true : false}
             isError={data.price == "" ? true : false}
             isOtp={false}
@@ -881,6 +945,7 @@ function PostScreen() {
             })}
           />
         </View>
+        
         {(data.category != "13" && data.category != "14") &&
           <View style={styles.input_section}>
             <Text style={styles.text_title}>{strings.quntity}</Text>
